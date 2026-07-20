@@ -5,6 +5,7 @@ import {
   PhoneIcon,
   MapPinIcon,
   LinkedinIcon,
+  GithubIcon,
   SendIcon,
   CheckIcon,
   ArrowUpRight,
@@ -34,6 +35,12 @@ const DETAILS = [
     label: 'LinkedIn',
     value: 'in/erik-birkl-a1565a29a',
     href: 'https://www.linkedin.com/in/erik-birkl-a1565a29a',
+  },
+  {
+    icon: GithubIcon,
+    label: 'GitHub',
+    value: 'github.com/Elrich14',
+    href: 'https://github.com/Elrich14',
   },
 ]
 

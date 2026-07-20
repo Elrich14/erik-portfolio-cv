@@ -10,16 +10,17 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center overflow-hidden px-4 pt-32 pb-20 sm:px-6"
+      className="relative flex min-h-screen items-center px-4 pt-32 pb-20 sm:px-6"
     >
-      {/* ambient glows */}
+      {/* ambient glows — no clipping, so the bottom one softly bleeds under
+          into the next section instead of ending in a hard cut */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-20 -left-24 h-[32rem] w-[32rem] rounded-full bg-brand/15 blur-[120px]"
+        className="pointer-events-none absolute -top-24 left-0 h-[32rem] w-[32rem] rounded-full bg-brand/15 blur-[120px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-32 right-[-6rem] h-[30rem] w-[30rem] rounded-full bg-accent/10 blur-[120px]"
+        className="pointer-events-none absolute -bottom-24 right-0 h-[32rem] w-[30rem] rounded-full bg-accent/12 blur-[130px]"
       />
 
       <div className="relative mx-auto w-full max-w-3xl text-center">
