@@ -30,11 +30,11 @@ export default function About() {
         />
 
         <div className="mt-12 grid items-stretch gap-8 md:grid-cols-5 md:gap-12">
-          {/* portrait placeholder */}
+
           <div className="md:col-span-2">
             <div className="glass relative mx-auto aspect-[4/5] max-w-[18rem] overflow-hidden rounded-3xl p-2 md:aspect-auto md:h-full md:max-w-none">
               <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/15 via-slate-800/40 to-blue-500/10">
-                {/* grid texture */}
+
                 <div
                   aria-hidden
                   className="absolute inset-0 opacity-[0.15]"
@@ -47,20 +47,16 @@ export default function About() {
                 <span className="relative font-display text-7xl font-bold text-white/80">
                   BE
                 </span>
-                {/* corner tag */}
-                <div className="glass absolute inset-x-3 bottom-3 flex items-center justify-between rounded-xl px-3 py-2">
+
+                <div className="glass absolute inset-x-3 bottom-3 flex items-center justify-center rounded-xl px-3 py-2">
                   <span className="font-mono text-xs text-slate-300">
                     Birkl Erik András
-                  </span>
-                  <span className="font-mono text-[0.65rem] text-brand">
-                    // portrait
                   </span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* mindset + soft skills */}
           <div className="md:col-span-3">
             <p className="text-lg leading-relaxed text-slate-300">
               I approach every interface as a{' '}

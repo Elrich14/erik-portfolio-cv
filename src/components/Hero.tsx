@@ -12,8 +12,7 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen items-center px-4 pt-32 pb-20 sm:px-6"
     >
-      {/* ambient glows — no clipping, so the bottom one softly bleeds under
-          into the next section instead of ending in a hard cut */}
+
       <div
         aria-hidden
         className="pointer-events-none absolute -top-24 left-0 h-[32rem] w-[32rem] rounded-full bg-brand/15 blur-[120px]"
@@ -24,7 +23,7 @@ export default function Hero() {
       />
 
       <div className="relative mx-auto w-full max-w-3xl text-center">
-        {/* availability badge */}
+
         <div className="glass inline-flex items-center gap-2.5 rounded-full px-4 py-2">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
@@ -53,7 +52,6 @@ export default function Hero() {
           functional as they are beautiful.
         </p>
 
-        {/* CTAs */}
         <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
           <a
             href="#experience"
@@ -71,7 +69,6 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* quick facts */}
         <div className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           {FACTS.map(({ icon: Icon, label }) => (
             <div key={label} className="flex items-center gap-2 text-slate-400">

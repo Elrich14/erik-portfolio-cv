@@ -1,7 +1,5 @@
 import type { SVGProps } from 'react'
 
-/* A minimal, dependency-free icon set (Lucide-style, 24×24 stroke). */
-
 type IconProps = SVGProps<SVGSVGElement>
 
 function Base({ children, ...props }: IconProps & { children: React.ReactNode }) {

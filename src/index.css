@@ -1,33 +1,25 @@
 @import 'tailwindcss';
 
-/* ------------------------------------------------------------------ */
-/*  Theme tokens (Tailwind v4)                                         */
-/* ------------------------------------------------------------------ */
 @theme {
   --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
-  /* Brand palette */
-  --color-brand: #10b981; /* emerald – primary   */
+  --color-brand: #10b981;
   --color-brand-soft: #34d399;
-  --color-accent: #3b82f6; /* blue    – secondary */
-  --color-ink: #020617; /* slate-950 base      */
+  --color-accent: #3b82f6;
+  --color-ink: #020617;
 }
 
-/* ------------------------------------------------------------------ */
-/*  Base                                                              */
-/* ------------------------------------------------------------------ */
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* small offset only — each section's own top padding clears the navbar,
-       so this just adds a little breathing room on anchor jumps */
+
     scroll-padding-top: 2rem;
-    /* keep the overscroll / rubber-band area dark (fixes the white strip) */
+
     background-color: var(--color-ink);
     color-scheme: dark;
-    /* kill the elastic overscroll bounce so no light strip can ever show */
+
     overscroll-behavior: none;
     -webkit-text-size-adjust: 100%;
   }
@@ -41,9 +33,7 @@
   body {
     margin: 0;
     min-height: 100vh;
-    /* transparent on purpose: the fixed constellation canvas (z-index:-2) must
-       show through. The dark base color lives on <html> instead — if <body>
-       also has an opaque background it paints OVER the canvas and hides it. */
+
     overscroll-behavior: none;
     color: var(--color-slate-300);
     font-family: var(--font-sans);
@@ -61,24 +51,24 @@
     color: #ecfdf5;
   }
 
-  /* Hidden scrollbars — scrolling still works */
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
   html,
   body {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* legacy Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
   ::-webkit-scrollbar {
     width: 0;
     height: 0;
-    display: none; /* Chromium / WebKit */
+    display: none;
   }
 }
 
-/* ------------------------------------------------------------------ */
-/*  Reusable component styles                                          */
-/* ------------------------------------------------------------------ */
 @layer components {
-  /* Glassmorphism surface */
+
   .glass {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(16px) saturate(140%);
@@ -89,7 +79,6 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
-  /* Emerald → teal gradient text */
   .text-gradient {
     background: linear-gradient(120deg, #34d399 0%, #10b981 45%, #3b82f6 130%);
     -webkit-background-clip: text;
@@ -97,7 +86,6 @@
     color: transparent;
   }
 
-  /* Mono eyebrow label used above section titles */
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -107,11 +95,6 @@
   }
 }
 
-/* ------------------------------------------------------------------ */
-/*  Utilities & keyframes                                              */
-/* ------------------------------------------------------------------ */
-
-/* Subtle film-grain overlay (sits above the canvas, below content) */
 .grain {
   position: fixed;
   inset: 0;

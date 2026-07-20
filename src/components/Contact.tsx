@@ -54,7 +54,7 @@ export default function Contact() {
     e.preventDefault()
     if (status === 'sending') return
     setStatus('sending')
-    // simulated network round-trip
+
     setTimeout(() => {
       setStatus('sent')
       setForm({ name: '', email: '', message: '' })
@@ -66,7 +66,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative px-4 py-16 sm:px-6 md:py-20">
-      {/* ambient glow */}
+
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]"
@@ -86,7 +86,7 @@ export default function Contact() {
         />
 
         <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-5">
-          {/* details */}
+
           <div className="lg:col-span-2">
             <ul className="flex h-full flex-col gap-3">
               {DETAILS.map(({ icon: Icon, label, value, href }) => (
@@ -115,7 +115,6 @@ export default function Contact() {
             </ul>
           </div>
 
-          {/* mock form */}
           <div className="lg:col-span-3">
             <form onSubmit={onSubmit} className="glass flex h-full flex-col rounded-3xl p-6 sm:p-8" noValidate>
               <div className="grid gap-5 sm:grid-cols-2">
@@ -198,7 +197,7 @@ export default function Contact() {
                 >
                   {status === 'sent'
                     ? '✓ Thanks — I’ll be in touch.'
-                    : '// this is a demo form'}
+                    : 'This is a demo form'}
                 </p>
               </div>
             </form>

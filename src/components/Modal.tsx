@@ -9,12 +9,6 @@ interface Props {
   children: React.ReactNode
 }
 
-/**
- * Accessible modal dialog rendered through a portal on <body> so it escapes
- * any ancestor `backdrop-filter` (which would otherwise trap `position: fixed`).
- * Handles Escape, backdrop click, body scroll-lock, focus move + restore and a
- * minimal focus trap.
- */
 export default function Modal({ open, onClose, labelledBy, children }: Props) {
   const panelRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
@@ -25,7 +19,7 @@ export default function Modal({ open, onClose, labelledBy, children }: Props) {
     const prevActive = document.activeElement as HTMLElement | null
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    // focus the close button once the panel has mounted
+
     const raf = requestAnimationFrame(() => closeRef.current?.focus())
 
     const onKey = (e: KeyboardEvent) => {

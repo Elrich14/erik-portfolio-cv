@@ -26,7 +26,7 @@ export default function Navbar() {
             scrolled ? 'bg-white/[0.05] shadow-black/40' : ''
           }`}
         >
-          {/* Brand */}
+
           <a
             href="#home"
             className="group flex items-center gap-2.5"
@@ -40,7 +40,6 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop links */}
           <ul className="hidden items-center gap-1 md:flex">
             {LINKS.map((l) => (
               <li key={l.href}>
@@ -63,7 +62,6 @@ export default function Navbar() {
               <ArrowUpRight className="h-4 w-4" />
             </a>
 
-            {/* Hamburger */}
             <button
               type="button"
               aria-label={open ? 'Close menu' : 'Open menu'}
@@ -80,7 +78,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile dropdown */}
         <div
           className={`glass mt-2 overflow-hidden rounded-2xl transition-all duration-300 md:hidden ${
             open ? 'max-h-80 opacity-100' : 'pointer-events-none max-h-0 border-transparent opacity-0'

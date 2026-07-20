@@ -10,9 +10,9 @@ import Footer from './components/Footer'
 export default function App() {
   return (
     <>
-      {/* bottom layer: native canvas constellation (z-index: -2) */}
+
       <ConstellationCanvas />
-      {/* film-grain texture (z-index: -1) */}
+
       <div className="grain" aria-hidden />
 
       <Navbar />

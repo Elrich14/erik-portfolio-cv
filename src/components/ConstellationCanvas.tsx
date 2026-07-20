@@ -8,15 +8,6 @@ interface Particle {
   r: number
 }
 
-/**
- * Full-screen native canvas "constellation" field that lives on the very
- * bottom layer (z-index: -2).
- *
- *  • ~100 slow-drifting stars, seeded at random positions across the whole
- *    viewport (never from 0,0).
- *  • Stars within LINK_DIST of each other are joined by a faint emerald line.
- *  • Stars near the cursor are joined to it by a faint blue line.
- */
 export default function ConstellationCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -30,8 +21,8 @@ export default function ConstellationCanvas() {
       '(prefers-reduced-motion: reduce)',
     ).matches
 
-    const LINK_DIST = 130 // star ↔ star
-    const MOUSE_DIST = 170 // star ↔ cursor
+    const LINK_DIST = 130
+    const MOUSE_DIST = 170
 
     let width = 0
     let height = 0
@@ -44,7 +35,7 @@ export default function ConstellationCanvas() {
     const seedParticles = () => {
       const count = Math.max(45, Math.min(120, Math.floor((width * height) / 13000)))
       particles = Array.from({ length: count }, () => ({
-        // random start position spread across the ENTIRE viewport
+
         x: rand(0, width),
         y: rand(0, height),
         vx: rand(-0.28, 0.28),
@@ -67,7 +58,6 @@ export default function ConstellationCanvas() {
     const draw = () => {
       ctx.clearRect(0, 0, width, height)
 
-      // move + bounce
       for (const p of particles) {
         if (!reduceMotion) {
           p.x += p.vx
@@ -79,7 +69,6 @@ export default function ConstellationCanvas() {
         }
       }
 
-      // star ↔ star links (emerald)
       for (let i = 0; i < particles.length; i++) {
         const a = particles[i]
         for (let j = i + 1; j < particles.length; j++) {
@@ -98,7 +87,6 @@ export default function ConstellationCanvas() {
           }
         }
 
-        // star ↔ cursor links (blue)
         if (mouse.active) {
           const dx = a.x - mouse.x
           const dy = a.y - mouse.y
@@ -115,7 +103,6 @@ export default function ConstellationCanvas() {
         }
       }
 
-      // star dots
       for (const p of particles) {
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
@@ -147,7 +134,7 @@ export default function ConstellationCanvas() {
     seedParticles()
 
     if (reduceMotion) {
-      draw() // single static frame
+      draw()
     } else {
       loop()
     }

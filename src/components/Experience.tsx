@@ -16,8 +16,8 @@ interface Detail {
 }
 
 interface Item {
-  period?: string // date range (work only)
-  done?: boolean // finished study → show "Completed" instead of years
+  period?: string
+  done?: boolean
   current?: boolean
   role: string
   org: string
@@ -149,7 +149,7 @@ function TimelineColumn({
 }) {
   return (
     <div>
-      {/* column header */}
+
       <div className="mb-6 flex items-center gap-3">
         <span className="glass flex h-11 w-11 items-center justify-center rounded-xl text-brand">
           <Icon className="h-5 w-5" />
@@ -160,7 +160,7 @@ function TimelineColumn({
       </div>
 
       <ol className="relative">
-        {/* rail */}
+
         <span
           aria-hidden
           className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-brand/50 via-white/10 to-transparent"
@@ -168,7 +168,7 @@ function TimelineColumn({
 
         {items.map((item, i) => (
           <li key={i} className="relative pl-11 pb-5 last:pb-0">
-            {/* node */}
+
             <span className="glass absolute left-0 top-0 flex h-8 w-8 items-center justify-center rounded-full text-brand">
               <Icon className="h-4 w-4" />
               {item.current && (
