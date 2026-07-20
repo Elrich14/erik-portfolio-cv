@@ -48,7 +48,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 const ENDPOINT =
   (import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined)?.trim() ||
-  undefined
+  'https://formspree.io/f/mjgnrlev'
 const USES_ENDPOINT = Boolean(ENDPOINT)
 const MY_EMAIL = 'elrich.020114@gmail.com'
 
