@@ -44,25 +44,60 @@ const DETAILS = [
   },
 ]
 
-type Status = 'idle' | 'sending' | 'sent'
+type Status = 'idle' | 'sending' | 'sent' | 'error'
+
+const ENDPOINT =
+  (import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined)?.trim() ||
+  undefined
+const USES_ENDPOINT = Boolean(ENDPOINT)
+const MY_EMAIL = 'elrich.020114@gmail.com'
 
 export default function Contact() {
   const [status, setStatus] = useState<Status>('idle')
   const [form, setForm] = useState({ name: '', email: '', message: '' })
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (status === 'sending') return
-    setStatus('sending')
-
-    setTimeout(() => {
-      setStatus('sent')
-      setForm({ name: '', email: '', message: '' })
-      setTimeout(() => setStatus('idle'), 4000)
-    }, 1600)
+  const reset = () => {
+    setForm({ name: '', email: '', message: '' })
+    window.setTimeout(() => setStatus('idle'), 5000)
   }
 
-  const disabled = status !== 'idle'
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (status === 'sending') return
+
+    if (!ENDPOINT) {
+      const subject = encodeURIComponent(
+        `Portfolio message from ${form.name || 'a visitor'}`,
+      )
+      const body = encodeURIComponent(
+        `${form.message}\n\n— ${form.name} <${form.email}>`,
+      )
+      window.location.href = `mailto:${MY_EMAIL}?subject=${subject}&body=${body}`
+      setStatus('sent')
+      reset()
+      return
+    }
+
+    setStatus('sending')
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('Request failed')
+      setStatus('sent')
+      reset()
+    } catch {
+      setStatus('error')
+      window.setTimeout(() => setStatus('idle'), 6000)
+    }
+  }
+
+  const disabled = status === 'sending'
+  const sentLabel = USES_ENDPOINT
+    ? 'Message sent successfully'
+    : 'Opening your email app'
 
   return (
     <section id="contact" className="relative px-4 py-16 sm:px-6 md:py-20">
@@ -116,7 +151,7 @@ export default function Contact() {
           </div>
 
           <div className="lg:col-span-3">
-            <form onSubmit={onSubmit} className="glass flex h-full flex-col rounded-3xl p-6 sm:p-8" noValidate>
+            <form onSubmit={onSubmit} className="glass flex h-full flex-col rounded-3xl p-6 sm:p-8">
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field
                   id="name"
@@ -167,7 +202,7 @@ export default function Contact() {
                       : 'bg-brand text-emerald-950 shadow-lg shadow-brand/25 hover:-translate-y-0.5 hover:bg-brand-soft disabled:translate-y-0'
                   }`}
                 >
-                  {status === 'idle' && (
+                  {(status === 'idle' || status === 'error') && (
                     <>
                       Send message
                       <SendIcon className="h-4.5 w-4.5" />
@@ -182,22 +217,36 @@ export default function Contact() {
                   {status === 'sent' && (
                     <>
                       <CheckIcon className="h-4.5 w-4.5" />
-                      Message sent successfully
+                      {sentLabel}
                     </>
                   )}
                 </button>
 
-                <p
-                  aria-live="polite"
-                  className={`font-mono text-xs transition-opacity ${
-                    status === 'sent'
-                      ? 'text-brand-soft opacity-100'
-                      : 'text-slate-500 opacity-100'
-                  }`}
-                >
-                  {status === 'sent'
-                    ? '✓ Thanks — I’ll be in touch.'
-                    : 'This is a demo form'}
+                <p aria-live="polite" className="font-mono text-xs">
+                  {status === 'error' ? (
+                    <span className="text-rose-400">
+                      Couldn&apos;t send —{' '}
+                      <a
+                        href={`mailto:${MY_EMAIL}`}
+                        className="underline transition-colors hover:text-rose-300"
+                      >
+                        email me directly
+                      </a>
+                      .
+                    </span>
+                  ) : status === 'sent' ? (
+                    <span className="text-brand-soft">
+                      {USES_ENDPOINT
+                        ? '✓ Thanks — I’ll be in touch.'
+                        : '✓ Your email app should open — just hit send.'}
+                    </span>
+                  ) : (
+                    <span className="text-slate-500">
+                      {USES_ENDPOINT
+                        ? 'I usually reply within a day.'
+                        : 'Opens in your email app.'}
+                    </span>
+                  )}
                 </p>
               </div>
             </form>
