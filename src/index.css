@@ -41,7 +41,9 @@
   body {
     margin: 0;
     min-height: 100vh;
-    background-color: var(--color-ink);
+    /* transparent on purpose: the fixed constellation canvas (z-index:-2) must
+       show through. The dark base color lives on <html> instead — if <body>
+       also has an opaque background it paints OVER the canvas and hides it. */
     overscroll-behavior: none;
     color: var(--color-slate-300);
     font-family: var(--font-sans);
