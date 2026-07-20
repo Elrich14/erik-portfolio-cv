@@ -40,10 +40,10 @@ export default function Hero() {
           <span className="text-gradient">Birkl Erik András.</span>
         </h1>
 
-        <p className="mt-6 font-display text-xl font-medium text-slate-200 sm:text-2xl md:text-3xl">
-          Frontend Developer{' '}
-          <span className="text-slate-500">&amp;</span>{' '}
-          Computer Engineering Student
+        <p className="mt-6 font-display text-xl font-medium sm:text-2xl md:text-3xl">
+          <span className="text-slate-100">Frontend Developer</span>{' '}
+          <span className="text-slate-500">·</span>{' '}
+          <span className="text-slate-400">React &amp; TypeScript</span>
         </p>
 
         <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
