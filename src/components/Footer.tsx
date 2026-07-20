@@ -10,9 +10,9 @@ export default function Footer() {
   return (
     <footer className="relative px-4 pb-10 sm:px-6">
       <div className="mx-auto max-w-6xl">
-        <div className="glass flex flex-col items-center gap-6 rounded-3xl px-6 py-8 sm:flex-row sm:justify-between">
-          <div className="text-center sm:text-left">
-            <div className="flex items-center justify-center gap-2 sm:justify-start">
+        <div className="glass flex flex-col items-center gap-6 rounded-3xl px-6 py-8">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-2">
               <span className="h-2 w-2 rounded-full bg-brand" />
               <span className="font-display text-lg font-semibold text-slate-100">
                 Birkl Erik András

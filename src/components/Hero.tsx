@@ -22,7 +22,7 @@ export default function Hero() {
         className="pointer-events-none absolute -bottom-32 right-[-6rem] h-[30rem] w-[30rem] rounded-full bg-accent/10 blur-[120px]"
       />
 
-      <div className="relative mx-auto w-full max-w-5xl">
+      <div className="relative mx-auto w-full max-w-3xl text-center">
         {/* availability badge */}
         <div className="glass inline-flex items-center gap-2.5 rounded-full px-4 py-2">
           <span className="relative flex h-2 w-2">
@@ -46,14 +46,14 @@ export default function Hero() {
           Computer Engineering Student
         </p>
 
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+        <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
           I&apos;m driven by where code meets design. I feel most at home in
           small, agile teams — turning ideas into interfaces that are as
           functional as they are beautiful.
         </p>
 
         {/* CTAs */}
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
           <a
             href="#experience"
             className="group inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-6 py-3.5 font-medium text-emerald-950 shadow-lg shadow-brand/25 transition-all hover:-translate-y-0.5 hover:bg-brand-soft hover:shadow-brand/40"
@@ -71,7 +71,7 @@ export default function Hero() {
         </div>
 
         {/* quick facts */}
-        <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           {FACTS.map(({ icon: Icon, label }) => (
             <div key={label} className="flex items-center gap-2 text-slate-400">
               <Icon className="h-4 w-4 text-brand" />

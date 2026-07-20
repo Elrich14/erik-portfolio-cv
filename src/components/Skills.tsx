@@ -70,9 +70,9 @@ export default function Skills() {
           {CATEGORIES.map(({ icon: Icon, title, span, items }) => (
             <div
               key={title}
-              className={`glass group rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 ${span}`}
+              className={`glass group rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 ${span}`}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center gap-3">
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-brand transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
                   <Icon className="h-5.5 w-5.5" />
                 </div>
@@ -81,7 +81,7 @@ export default function Skills() {
                 </h3>
               </div>
 
-              <ul className="mt-5 flex flex-wrap gap-2">
+              <ul className="mt-5 flex flex-wrap justify-center gap-2">
                 {items.map((item) => (
                   <li
                     key={item}
