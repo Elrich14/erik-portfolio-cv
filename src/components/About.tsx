@@ -29,10 +29,10 @@ export default function About() {
           }
         />
 
-        <div className="mt-12 grid items-center gap-8 md:grid-cols-5 md:gap-12">
+        <div className="mt-12 grid items-stretch gap-8 md:grid-cols-5 md:gap-12">
           {/* portrait placeholder */}
           <div className="md:col-span-2">
-            <div className="glass relative mx-auto aspect-[4/5] max-w-[18rem] overflow-hidden rounded-3xl p-2 md:max-w-none">
+            <div className="glass relative mx-auto aspect-[4/5] max-w-[18rem] overflow-hidden rounded-3xl p-2 md:aspect-auto md:h-full md:max-w-none">
               <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/15 via-slate-800/40 to-blue-500/10">
                 {/* grid texture */}
                 <div

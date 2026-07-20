@@ -78,17 +78,17 @@ export default function Contact() {
           intro="Have a role, a project or just a question? My inbox is always open — I’ll get back to you quickly."
         />
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-5">
+        <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-5">
           {/* details */}
           <div className="lg:col-span-2">
-            <ul className="flex flex-col gap-3">
+            <ul className="flex h-full flex-col gap-3">
               {DETAILS.map(({ icon: Icon, label, value, href }) => (
-                <li key={label}>
+                <li key={label} className="flex-1">
                   <a
                     href={href}
                     target={href.startsWith('http') ? '_blank' : undefined}
                     rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="glass group flex items-center gap-4 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30"
+                    className="glass group flex h-full items-center gap-4 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30"
                   >
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-brand transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
                       <Icon className="h-5 w-5" />
@@ -110,7 +110,7 @@ export default function Contact() {
 
           {/* mock form */}
           <div className="lg:col-span-3">
-            <form onSubmit={onSubmit} className="glass rounded-3xl p-6 sm:p-8" noValidate>
+            <form onSubmit={onSubmit} className="glass flex h-full flex-col rounded-3xl p-6 sm:p-8" noValidate>
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field
                   id="name"
@@ -132,7 +132,7 @@ export default function Contact() {
                 />
               </div>
 
-              <div className="mt-5">
+              <div className="mt-5 flex flex-1 flex-col">
                 <label
                   htmlFor="message"
                   className="mb-2 block font-mono text-xs uppercase tracking-wider text-slate-400"
@@ -147,7 +147,7 @@ export default function Contact() {
                   value={form.message}
                   disabled={disabled}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-100 placeholder:text-slate-600 transition-colors focus:border-brand/50 focus:bg-white/[0.05] focus:outline-none disabled:opacity-60"
+                  className="w-full flex-1 resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-100 placeholder:text-slate-600 transition-colors focus:border-brand/50 focus:bg-white/[0.05] focus:outline-none disabled:opacity-60"
                 />
               </div>
 
