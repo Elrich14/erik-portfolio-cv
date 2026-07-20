@@ -61,8 +61,8 @@ const KIND_ICON: Record<Item['kind'], ComponentType<SVGProps<SVGSVGElement>>> = 
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative px-4 py-24 sm:px-6 md:py-28">
-      <div className="mx-auto flex max-w-6xl flex-col items-center">
+    <section id="experience" className="relative px-4 py-16 sm:px-6 md:py-20">
+      <div className="mx-auto max-w-6xl">
         <SectionHeading
           index="03"
           eyebrow="Experience & Education"
@@ -74,21 +74,19 @@ export default function Experience() {
           intro="A short timeline of where I’ve worked, studied and grown."
         />
 
-        <ol className="mt-14 flex w-full max-w-2xl flex-col items-center">
+        <ol className="relative mx-auto mt-12 max-w-3xl">
+          {/* rail */}
+          <span
+            aria-hidden
+            className="absolute left-[19px] top-2 bottom-2 w-px bg-gradient-to-b from-brand/50 via-white/10 to-transparent"
+          />
+
           {TIMELINE.map((item, i) => {
             const Icon = KIND_ICON[item.kind]
             return (
-              <li key={i} className="flex w-full flex-col items-center">
-                {/* connector from the previous card */}
-                {i > 0 && (
-                  <span
-                    aria-hidden
-                    className="h-10 w-px bg-gradient-to-b from-white/5 via-white/15 to-brand/40"
-                  />
-                )}
-
+              <li key={i} className="relative pl-14 pb-6 last:pb-0">
                 {/* node */}
-                <span className="glass relative z-10 flex h-12 w-12 items-center justify-center rounded-full text-brand">
+                <span className="glass absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-full text-brand">
                   <Icon className="h-5 w-5" />
                   {item.current && (
                     <span className="absolute -right-0.5 -top-0.5 flex h-3 w-3">
@@ -98,9 +96,8 @@ export default function Experience() {
                   )}
                 </span>
 
-                {/* card */}
-                <div className="glass mt-5 w-full rounded-2xl p-5 text-center transition-all duration-300 hover:border-brand/30 sm:p-6">
-                  <div className="flex flex-wrap items-center justify-center gap-2">
+                <div className="glass rounded-2xl p-5 transition-all duration-300 hover:border-brand/30 sm:p-6">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="font-mono text-xs tracking-wide text-brand">
                       {item.period}
                     </span>
@@ -117,12 +114,12 @@ export default function Experience() {
                   <p className="mt-0.5 text-sm font-medium text-slate-300">
                     {item.org}
                   </p>
-                  <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
+                  <p className="mt-3 text-sm leading-relaxed text-slate-400">
                     {item.desc}
                   </p>
 
                   {item.tags && (
-                    <ul className="mt-4 flex flex-wrap justify-center gap-2">
+                    <ul className="mt-4 flex flex-wrap gap-2">
                       {item.tags.map((t) => (
                         <li
                           key={t}

@@ -58,7 +58,7 @@ export default function Contact() {
   const disabled = status !== 'idle'
 
   return (
-    <section id="contact" className="relative px-4 py-24 sm:px-6 md:py-28">
+    <section id="contact" className="relative px-4 py-16 sm:px-6 md:py-20">
       {/* ambient glow */}
       <div
         aria-hidden
