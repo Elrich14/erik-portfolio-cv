@@ -158,9 +158,39 @@
   }
 }
 
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-fade {
+  animation: modal-fade 0.2s ease-out;
+}
+
+.modal-pop {
+  animation: modal-pop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-pulse-dot,
-  .grain {
+  .grain,
+  .modal-fade,
+  .modal-pop {
     animation: none;
   }
 }
