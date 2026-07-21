@@ -83,9 +83,9 @@ const EDUCATION: Item[] = [
   },
   {
     done: true,
-    role: 'Secondary Diploma · Media',
+    role: 'High School · Media',
     org: 'Deák Ferenc Gimnázium, Kispest',
-    desc: 'Secondary school diploma with a Media specialization, where an early interest in visual communication took shape.',
+    desc: 'High school with a Media specialization, where an early interest in visual communication took shape.',
   },
 ]
 
