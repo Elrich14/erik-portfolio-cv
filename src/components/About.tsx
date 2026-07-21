@@ -37,7 +37,7 @@ export default function About() {
                 <img
                   src="/portrait.jpg"
                   alt="Birkl Erik András"
-                  className="h-full w-full object-cover"
+                  className="absolute inset-0 h-full w-full object-cover object-[center_38%]"
                 />
                 <div
                   aria-hidden
