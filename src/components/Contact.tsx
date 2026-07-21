@@ -27,8 +27,8 @@ const DETAILS = [
   {
     icon: MapPinIcon,
     label: 'Location',
-    value: '1192 Budapest, Álmos utca 50',
-    href: 'https://maps.google.com/?q=1192+Budapest+Álmos+utca+50',
+    value: 'Budapest / Szeged',
+    href: 'https://maps.google.com/?q=Budapest,+Hungary',
   },
   {
     icon: LinkedinIcon,
