@@ -10,7 +10,7 @@ const SOFT_SKILLS = [
   {
     icon: UsersIcon,
     title: 'Small-Team Specialist',
-    body: 'I do my best work in lean, agile teams where I can own features end-to-end, communicate directly with designers and backend, and ship fast without bureaucracy.',
+    body: 'I feel most at home in small, agile teams where I can own features end-to-end, communicate directly with designers and backend, and ship fast without bureaucracy.',
   },
 ]
 

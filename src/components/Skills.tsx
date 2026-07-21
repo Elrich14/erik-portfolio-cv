@@ -1,6 +1,14 @@
 import type { ComponentType, SVGProps } from 'react'
 import SectionHeading from './SectionHeading'
-import { CodeIcon, LayersIcon, WrenchIcon, BotIcon, GlobeIcon } from './icons'
+import {
+  CodeIcon,
+  LayersIcon,
+  WrenchIcon,
+  ServerIcon,
+  CheckIcon,
+  BotIcon,
+  GlobeIcon,
+} from './icons'
 
 interface Category {
   icon: ComponentType<SVGProps<SVGSVGElement>>
@@ -12,40 +20,75 @@ interface Category {
 const CATEGORIES: Category[] = [
   {
     icon: CodeIcon,
-    title: 'Languages & Fundamentals',
+    title: 'Languages & Core',
     span: 'lg:col-span-2',
     items: ['JavaScript', 'TypeScript', 'HTML5', 'CSS3'],
   },
   {
     icon: LayersIcon,
-    title: 'Frameworks & Libraries',
-    span: 'lg:col-span-2',
-    items: ['React', 'Material UI', 'Jest'],
-  },
-  {
-    icon: BotIcon,
-    title: 'AI-Assisted Development',
-    span: 'lg:col-span-2',
-    items: ['Claude Code', 'GitHub Copilot', 'ChatGPT', 'Gemini'],
+    title: 'Frameworks & UI',
+    span: 'lg:col-span-4',
+    items: [
+      'React 19',
+      'React Router',
+      'Redux Toolkit',
+      'MUI 9',
+      'Emotion',
+      'Formik',
+      'Yup',
+      'Axios',
+      'STOMP.js',
+      'Vidux UI',
+    ],
   },
   {
     icon: WrenchIcon,
-    title: 'Infrastructure & Tooling',
+    title: 'Build & Bundling',
+    span: 'lg:col-span-2',
+    items: ['Webpack 5', 'Babel 8', 'React Compiler', 'PostCSS'],
+  },
+  {
+    icon: CheckIcon,
+    title: 'Testing & Quality',
     span: 'lg:col-span-4',
+    items: [
+      'Jest',
+      'React Testing Library',
+      'MSW',
+      'ESLint 9',
+      'Prettier 3',
+      'SonarQube',
+    ],
+  },
+  {
+    icon: ServerIcon,
+    title: 'Infrastructure & DevOps',
+    span: 'lg:col-span-6',
     items: [
       'Git',
       'Jenkins',
-      'SonarQube',
+      'GitHub Actions',
+      'Dependabot',
+      'Docker / Podman',
+      'Harbor',
+      'nginx',
       'Keycloak',
       'RabbitMQ',
       'Active Directory',
+      'i18next',
       'Agile (Scrum / Kanban)',
     ],
   },
   {
+    icon: BotIcon,
+    title: 'AI-Assisted Development',
+    span: 'lg:col-span-3',
+    items: ['Claude Code', 'GitHub Copilot', 'ChatGPT', 'Gemini'],
+  },
+  {
     icon: GlobeIcon,
     title: 'Spoken Languages',
-    span: 'lg:col-span-2',
+    span: 'lg:col-span-3',
     items: ['Hungarian — Native', 'English — B2'],
   },
 ]

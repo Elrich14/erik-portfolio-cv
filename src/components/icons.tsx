@@ -162,3 +162,11 @@ export const UsersIcon = (p: IconProps) => (
     <path d="M22 20v-2a4 4 0 0 0-3-3.8M16 4.2A3.2 3.2 0 0 1 16 10.6" />
   </Base>
 )
+
+export const ServerIcon = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="3" y="4" width="18" height="7" rx="2" />
+    <rect x="3" y="13" width="18" height="7" rx="2" />
+    <path d="M7 7.5h.01M7 16.5h.01" />
+  </Base>
+)

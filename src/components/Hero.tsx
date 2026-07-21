@@ -47,9 +47,8 @@ export default function Hero() {
         </p>
 
         <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
-          I&apos;m driven by where code meets design. I feel most at home in
-          small, agile teams — turning ideas into interfaces that are as
-          functional as they are beautiful.
+          I&apos;m driven by where code meets design — turning ideas into
+          interfaces that are as functional as they are beautiful.
         </p>
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
