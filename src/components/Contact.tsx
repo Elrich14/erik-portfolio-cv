@@ -240,13 +240,7 @@ export default function Contact() {
                         ? '✓ Thanks — I’ll be in touch.'
                         : '✓ Your email app should open — just hit send.'}
                     </span>
-                  ) : (
-                    <span className="text-slate-500">
-                      {USES_ENDPOINT
-                        ? 'I usually reply within a day.'
-                        : 'Opens in your email app.'}
-                    </span>
-                  )}
+                  ) : null}
                 </p>
               </div>
             </form>
