@@ -33,21 +33,16 @@ export default function About() {
 
           <div className="md:col-span-2">
             <div className="glass relative mx-auto aspect-[4/5] max-w-[18rem] overflow-hidden rounded-3xl p-2 md:aspect-auto md:h-full md:max-w-none">
-              <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/15 via-slate-800/40 to-blue-500/10">
-
+              <div className="relative h-full w-full overflow-hidden rounded-2xl">
+                <img
+                  src="/portrait.jpg"
+                  alt="Birkl Erik András"
+                  className="h-full w-full object-cover"
+                />
                 <div
                   aria-hidden
-                  className="absolute inset-0 opacity-[0.15]"
-                  style={{
-                    backgroundImage:
-                      'linear-gradient(rgba(255,255,255,.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.4) 1px, transparent 1px)',
-                    backgroundSize: '28px 28px',
-                  }}
+                  className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"
                 />
-                <span className="relative font-display text-7xl font-bold text-white/80">
-                  BE
-                </span>
-
                 <div className="glass absolute inset-x-3 bottom-3 flex items-center justify-center rounded-xl px-3 py-2">
                   <span className="font-mono text-xs text-slate-300">
                     Birkl Erik András
