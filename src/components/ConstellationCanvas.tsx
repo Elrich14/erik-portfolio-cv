@@ -56,7 +56,8 @@ export default function ConstellationCanvas() {
     }
 
     const draw = () => {
-      ctx.clearRect(0, 0, width, height)
+      ctx.fillStyle = '#020617'
+      ctx.fillRect(0, 0, width, height)
 
       for (const p of particles) {
         if (!reduceMotion) {
@@ -130,6 +131,11 @@ export default function ConstellationCanvas() {
       seedParticles()
     }
 
+    const refresh = () => {
+      resize()
+      if (reduceMotion) draw()
+    }
+
     resize()
     seedParticles()
 
@@ -139,13 +145,23 @@ export default function ConstellationCanvas() {
       loop()
     }
 
+    const rafRefresh = window.requestAnimationFrame(refresh)
+    const onVisible = () => {
+      if (!document.hidden) refresh()
+    }
+
     window.addEventListener('resize', onResize)
+    window.addEventListener('load', refresh)
+    document.addEventListener('visibilitychange', onVisible)
     window.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseleave', onMouseLeave)
 
     return () => {
       window.cancelAnimationFrame(raf)
+      window.cancelAnimationFrame(rafRefresh)
       window.removeEventListener('resize', onResize)
+      window.removeEventListener('load', refresh)
+      document.removeEventListener('visibilitychange', onVisible)
       window.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('mouseleave', onMouseLeave)
     }
@@ -156,7 +172,7 @@ export default function ConstellationCanvas() {
       ref={canvasRef}
       aria-hidden="true"
       className="pointer-events-none fixed inset-0"
-      style={{ zIndex: -2 }}
+      style={{ zIndex: -2, transform: 'translateZ(0)' }}
     />
   )
 }
