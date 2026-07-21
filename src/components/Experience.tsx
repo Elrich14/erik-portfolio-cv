@@ -76,7 +76,7 @@ const WORK: Item[] = [
 const EDUCATION: Item[] = [
   {
     done: true,
-    role: 'Computer Engineering, BSc',
+    role: 'Computer Science Engineering, BSc',
     org: 'University of Szeged',
     desc: 'Studied software engineering, algorithms, databases and systems, combined with plenty of hands-on project work.',
     tags: ['Software Engineering', 'Algorithms', 'Databases'],
