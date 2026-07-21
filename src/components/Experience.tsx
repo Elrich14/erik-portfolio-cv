@@ -183,7 +183,7 @@ function TimelineColumn({
               <button
                 type="button"
                 onClick={() => onOpen(item)}
-                className="glass group block w-full cursor-pointer rounded-2xl p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 hover:bg-white/[0.05] focus:outline-none focus-visible:border-brand/60"
+                className="glass group block w-full cursor-pointer rounded-2xl p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 focus:outline-none focus-visible:border-brand/60"
               >
                 <CardBody item={item} />
                 <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs text-brand transition-colors group-hover:text-brand-soft">

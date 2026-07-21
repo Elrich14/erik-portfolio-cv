@@ -23,7 +23,7 @@ export default function Navbar() {
       <nav className="mx-auto max-w-6xl px-4 pt-3 sm:px-6 sm:pt-4">
         <div
           className={`glass flex items-center justify-between rounded-2xl px-4 py-3 transition-all duration-300 sm:px-5 ${
-            scrolled ? 'bg-white/[0.05] shadow-black/40' : ''
+            scrolled ? 'shadow-lg shadow-black/40' : ''
           }`}
         >
 
