@@ -37,18 +37,18 @@ export default function Hero() {
         <h1 className="mt-7 font-display text-5xl font-bold leading-[1.02] tracking-tight text-slate-100 sm:text-6xl md:text-7xl">
           Hi, I&apos;m
           <br className="hidden sm:block" />{' '}
-          <span className="text-gradient">Birkl Erik András.</span>
+          <span className="text-gradient">Erik András Birkl.</span>
         </h1>
 
         <p className="mt-6 font-display text-xl font-medium sm:text-2xl md:text-3xl">
-          <span className="text-slate-100">Frontend Developer</span>{' '}
+          <span className="text-slate-100">Software Engineer</span>{' '}
           <span className="text-slate-500">·</span>{' '}
           <span className="text-slate-400">React &amp; TypeScript</span>
         </p>
 
         <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
-          I&apos;m driven by where code meets design — turning ideas into
-          interfaces that are as functional as they are beautiful.
+          I build clean, reliable interfaces with React and TypeScript — and
+          I like knowing what&apos;s happening underneath them too.
         </p>
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
