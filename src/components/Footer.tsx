@@ -1,7 +1,7 @@
 import { GithubIcon, LinkedinIcon, MailIcon, ArrowUp } from './icons'
 
 const SOCIALS = [
-  { icon: LinkedinIcon, href: 'https://www.linkedin.com/in/erik-birkl-a1565a29a', label: 'LinkedIn' },
+  { icon: LinkedinIcon, href: 'https://www.linkedin.com/in/erik-andrás-birkl-7b4240306', label: 'LinkedIn' },
   { icon: GithubIcon, href: 'https://github.com/Elrich14', label: 'GitHub' },
   { icon: MailIcon, href: 'mailto:elrich.020114@gmail.com', label: 'Email' },
 ]

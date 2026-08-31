@@ -4,6 +4,7 @@ import { MenuIcon, CloseIcon, ArrowUpRight } from './icons'
 const LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
   { label: 'Experience', href: '#experience' },
 ]
 

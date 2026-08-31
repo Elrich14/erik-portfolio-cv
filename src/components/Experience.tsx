@@ -43,6 +43,7 @@ const WORK: Item[] = [
         'Participating in agile development processes, improving project delivery and overall team efficiency.',
         'Integrated the frontend with backend APIs to display live video streams, device status, analytics dashboards and alarm handling.',
         'Developed and maintained a private npm package of shared UI components — ensuring design consistency and accelerating development across multiple company projects.',
+        'Contributed to backend tasks by writing database migration scripts, helping balance team capacity and support project delivery.',
       ],
       stack: [
         { group: 'Languages & Core', items: ['JavaScript', 'TypeScript', 'HTML5', 'CSS3'] },
@@ -76,9 +77,10 @@ const WORK: Item[] = [
 const EDUCATION: Item[] = [
   {
     done: true,
+    period: '2026',
     role: 'Computer Science Engineering, BSc',
     org: 'University of Szeged',
-    desc: 'Studied software engineering, algorithms, databases and systems, combined with plenty of hands-on project work.',
+    desc: 'Studied software engineering, algorithms, databases and systems, combined with plenty of hands-on project work — including a full-stack thesis project.',
     tags: ['Software Engineering', 'Algorithms', 'Databases'],
   },
   {
@@ -95,7 +97,7 @@ function PeriodBadge({ item }: { item: Item }) {
       {item.done ? (
         <span className="inline-flex items-center gap-1.5 font-mono text-xs text-brand">
           <CheckIcon className="h-3.5 w-3.5" />
-          Completed
+          Completed{item.period ? ` · ${item.period}` : ''}
         </span>
       ) : (
         <span className="font-mono text-xs tracking-wide text-brand">
@@ -210,7 +212,7 @@ export default function Experience() {
     <section id="experience" className="relative px-4 py-16 sm:px-6 md:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          index="03"
+          index="04"
           eyebrow="Experience & Education"
           title={
             <>

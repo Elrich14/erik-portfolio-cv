@@ -1,16 +1,16 @@
 import SectionHeading from './SectionHeading'
-import { PaletteIcon, UsersIcon } from './icons'
+import { PaletteIcon, LayersIcon } from './icons'
 
 const SOFT_SKILLS = [
   {
     icon: PaletteIcon,
-    title: 'UI/UX Design Mindset',
-    body: 'I think in components and user flows. Design isn’t a final coat of paint — it’s baked into how I structure, name and build things from the first commit.',
+    title: 'UI Design & Frontend',
+    body: 'I don’t just implement existing Figma prototypes. When needed, I design interfaces and user flows from scratch and translate them into clean React components.',
   },
   {
-    icon: UsersIcon,
-    title: 'Small-Team Specialist',
-    body: 'I feel most at home in small, agile teams where I can own features end-to-end, communicate directly with designers and backend, and ship fast without bureaucracy.',
+    icon: LayersIcon,
+    title: 'Cross-Stack Problem Solving',
+    body: 'While my core focus is frontend, I’m comfortable stepping outside my comfort zone to handle backend or infrastructure tasks whenever a project needs it.',
   },
 ]
 

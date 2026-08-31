@@ -170,3 +170,17 @@ export const ServerIcon = (p: IconProps) => (
     <path d="M7 7.5h.01M7 16.5h.01" />
   </Base>
 )
+
+export const ShieldIcon = (p: IconProps) => (
+  <Base {...p}>
+    <path d="M12 3 4.5 6v6c0 4.5 3.2 7.5 7.5 9 4.3-1.5 7.5-4.5 7.5-9V6L12 3Z" />
+    <path d="m9 12 2 2 4-4" />
+  </Base>
+)
+
+export const CreditCardIcon = (p: IconProps) => (
+  <Base {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2.5" />
+    <path d="M3 10h18M7 15h4" />
+  </Base>
+)

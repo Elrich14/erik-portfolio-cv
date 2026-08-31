@@ -27,14 +27,14 @@ const DETAILS = [
   {
     icon: MapPinIcon,
     label: 'Location',
-    value: 'Budapest / Szeged',
+    value: 'Budapest, Hungary',
     href: 'https://maps.google.com/?q=Budapest,+Hungary',
   },
   {
     icon: LinkedinIcon,
     label: 'LinkedIn',
-    value: 'in/erik-birkl-a1565a29a',
-    href: 'https://www.linkedin.com/in/erik-birkl-a1565a29a',
+    value: 'in/erik-andrás-birkl-7b4240306',
+    href: 'https://www.linkedin.com/in/erik-andrás-birkl-7b4240306',
   },
   {
     icon: GithubIcon,
@@ -109,7 +109,7 @@ export default function Contact() {
 
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
-          index="04"
+          index="05"
           eyebrow="Contact"
           title={
             <>
