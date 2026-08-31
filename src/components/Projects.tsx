@@ -17,6 +17,7 @@ interface Highlight {
 
 interface Project {
   badge: string
+  inProgress?: boolean
   name: string
   tagline: string
   description: string
@@ -28,10 +29,11 @@ interface Project {
 const PROJECTS: Project[] = [
   {
     badge: 'Thesis project · Solo build',
+    inProgress: true,
     name: 'KERIAN Webshop',
-    tagline: 'Full-stack e-commerce, built solo — from concept to checkout.',
+    tagline: 'Full-stack e-commerce, built solo — still a work in progress.',
     description:
-      'A clothing e-commerce platform I designed and built end-to-end as my thesis project — UI concept, database schema, REST backend and a real Stripe checkout. Customers browse and filter by size, colour and gender, manage a persistent cart and wishlist, and pay by card; admins get a 2FA-locked dashboard for products, orders and analytics.',
+      "A clothing e-commerce platform I'm designing and building solo as my thesis project — UI concept, database schema, REST backend and a real Stripe checkout. Customers can already browse and filter by size, colour and gender, manage a cart and wishlist, and pay by card, while I keep extending the admin side and polishing the rest.",
     highlights: [
       {
         icon: BotIcon,
@@ -73,9 +75,20 @@ const PROJECTS: Project[] = [
 function ProjectCard({ project }: { project: Project }) {
   return (
     <div className="glass rounded-3xl p-6 sm:p-8">
-      <span className="rounded-full border border-brand/30 bg-brand/10 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-brand-soft">
-        {project.badge}
-      </span>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="rounded-full border border-brand/30 bg-brand/10 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-brand-soft">
+          {project.badge}
+        </span>
+        {project.inProgress && (
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-brand/30 bg-brand/10 px-3 py-1 font-mono text-[0.7rem] uppercase tracking-wider text-brand-soft">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
+            </span>
+            In Progress
+          </span>
+        )}
+      </div>
 
       <h3 className="mt-4 font-display text-2xl font-semibold text-slate-100 sm:text-3xl">
         {project.name}
