@@ -1,0 +1,169 @@
+{
+  "common": {
+    "getInTouch": "Kapcsolatfelvétel"
+  },
+  "nav": {
+    "about": "Rólam",
+    "skills": "Készségek",
+    "projects": "Projektek",
+    "experience": "Tapasztalat",
+    "openMenu": "Menü megnyitása",
+    "closeMenu": "Menü bezárása"
+  },
+  "hero": {
+    "badge": "Nyitott távoli és hibrid lehetőségekre",
+    "greeting": "Szia,",
+    "name": "Erik András Birkl",
+    "closing": "vagyok.",
+    "title": "Szoftvermérnök",
+    "subtitle": "Megbízható, letisztult felhasználói felületeket építek React-tel és TypeScripttel — és szeretem tudni azt is, mi történik a felszín alatt.",
+    "factLocation": "Budapest, HU",
+    "factLanguage": "EN · B2",
+    "factRole": "Frontend a Vidux-nál"
+  },
+  "about": {
+    "eyebrow": "Rólam",
+    "titleLine1": "Tervezői szemlélet,",
+    "titleLine2": "mérnöki gondolkodás.",
+    "portraitCaption": "Birkl Erik András",
+    "paragraph1": "Minden felületre <em>termékként</em> tekintek, nem csupán egy képernyőként. A célom, hogy olyan UI/UX-et építsek, ami valóban működik — gyors, elérhető és intuitív —, miközben annyira <em>szép</em> is, hogy az emberek tényleg szívesen használják.",
+    "paragraph2": "Odafigyelek azokra a részletekre, amiket mások átugranak: egy átmenet lassítására, egy felirat kontrasztjára, a térközök ritmusára. Pontosan ez a megszállottság kell ahhoz, hogy a mérnöki munka és a design tényleg találkozzon egy termékben.",
+    "skill1Title": "UI dizájn és frontend",
+    "skill1Body": "Nem csak kész Figma-terveket ültetek át kódba. Ha kell, nulláról is megtervezem a felületet és a felhasználói folyamatokat, majd letisztult React komponensekké alakítom őket.",
+    "skill2Title": "Problémamegoldás a teljes stacken át",
+    "skill2Body": "Bár elsősorban frontendre fókuszálok, szívesen lépek ki a komfortzónámból backend vagy infrastruktúra feladatok felé is, ha egy projekt ezt kívánja."
+  },
+  "skills": {
+    "eyebrow": "Készségek",
+    "titleLine1": "Az eszköztár, amivel",
+    "titleLine2": "dolgozom.",
+    "intro": "Az alapoktól a keretrendszerekig, a pipeline-tól az AI-copilotokig, amik mindezt felgyorsítják.",
+    "categories": {
+      "languagesCore": "Nyelvek és alapok",
+      "frameworksUi": "Keretrendszerek és UI",
+      "buildBundling": "Build és bundling",
+      "testingQuality": "Tesztelés és minőség",
+      "infraDevops": "Infrastruktúra és DevOps",
+      "aiAssisted": "AI-alapú fejlesztés",
+      "spokenLanguages": "Beszélt nyelvek"
+    },
+    "spokenLanguagesItems": ["Magyar — Anyanyelv", "Angol — B2 szint"]
+  },
+  "projects": {
+    "eyebrow": "Projektek",
+    "titleLine1": "Amit a munkán",
+    "titleLine2": "túl építek.",
+    "intro": "Egy full-stack projekt, amit egyedül terveztem, építettem és viszek végig, elejétől a végéig.",
+    "kerian": {
+      "badge": "Szakdolgozat · Egyedül épített",
+      "inProgressLabel": "Folyamatban",
+      "tagline": "Full-stack webshop, egyedül építve — még mindig alakul.",
+      "description": "Egy ruházati webshop, amit egyedül tervezek és építek a szakdolgozatomként — UI-koncepció, adatbázis-terv, REST backend és valódi Stripe-os fizetés. A vásárlók már most is böngészhetnek és szűrhetnek méret, szín és nem szerint, kezelhetik a kosarukat és a kívánságlistájukat, és bankkártyával fizethetnek, miközben én tovább bővítem az admin felületet és csiszolom a többit.",
+      "highlightAiTitle": "AI-alapú termékajánló",
+      "highlightAiBody": "A Claude Haiku 4.5 a kosárhoz stílusban és színben illő termékeket ajánl — olyat, ami még nincs a kosárban.",
+      "highlightStripeTitle": "Stripe Checkout",
+      "highlightStripeBody": "Végponttól végpontig működő online bankkártyás fizetés, a kosártól a rendelés visszaigazolásáig.",
+      "highlightAdminTitle": "2FA admin és analitika",
+      "highlightAdminBody": "TOTP-vel védett admin felület, élő bevétel-, rendelés- és trend-dashboarddal.",
+      "highlightInventoryTitle": "Konkurencia-biztos készletkezelés",
+      "highlightInventoryBody": "Pesszimista sorzárolás gondoskodik róla, hogy egyidejű rendeléseknél se menjen negatívba a készlet.",
+      "cta": "Forráskód megtekintése GitHubon"
+    }
+  },
+  "experience": {
+    "eyebrow": "Tapasztalat és tanulmányok",
+    "titleLine1": "Az eddigi",
+    "titleLine2": "utam.",
+    "intro": "Két külön szál — hol dolgoztam, és hol tanultam. Kattints egy kiemelt szerepkörre a teljes történetért.",
+    "workLabel": "Munka",
+    "educationLabel": "Tanulmányok",
+    "completedLabel": "Befejezve",
+    "nowLabel": "Most",
+    "viewFullDetails": "Részletek megtekintése",
+    "modalWhatIDid": "Mit csináltam",
+    "modalTechStackUsed": "Használt technológiák",
+    "work": {
+      "vidux": {
+        "role": "Frontend fejlesztő",
+        "desc": "React / TypeScript frontend és egy újrafelhasználható UI komponens-könyvtár építése és karbantartása. Figma-tervek pixelpontos felületekké alakítása, valamint backend API-k integrálása élő videó megjelenítéséhez a banki szektorban.",
+        "detailSubtitle": "IP-alapú biztonsági rendszerek és videórögzítő megoldások a banki szektor számára.",
+        "detailBullets": [
+          "Webes frontendek építése React / TypeScript és JavaScript segítségével, folyamatosan javítva a felhasználói élményt és a felület dizájnját.",
+          "Szoros együttműködés a tervezőkkel Figmán keresztül, hogy minden UI-elrendezés pontosan megfeleljen a specifikációnak.",
+          "Részvétel az agilis fejlesztési folyamatokban, javítva a projekt-szállítást és a csapat egészének hatékonyságát.",
+          "A frontend integrálása backend API-kkal élő videófolyamok, eszközállapotok, analitikai dashboardok és riasztáskezelés megjelenítéséhez.",
+          "Egy privát npm csomag fejlesztése és karbantartása közös UI-komponensekhez — ez biztosítja a design konzisztenciáját és gyorsítja a fejlesztést több cégen belüli projektben is.",
+          "Backend feladatokba is bekapcsolódtam adatbázis-migrációs szkriptek írásával, ezzel segítve a csapat kapacitásának kiegyensúlyozását és a projekt-szállítást."
+        ],
+        "stackGroups": {
+          "languagesCore": "Nyelvek és alapok",
+          "frameworksLibraries": "Keretrendszerek és könyvtárak",
+          "infraTools": "Infrastruktúra és eszközök",
+          "aiAssisted": "AI-alapú fejlesztés",
+          "methodology": "Módszertan"
+        }
+      },
+      "accountant": {
+        "role": "Adatrögzítő könyvelő",
+        "desc": "Könyvelési adatrögzítés és adminisztráció — pontosság, felelősségvállalás és magabiztos munka strukturált adatokkal."
+      },
+      "bartender": {
+        "role": "Pultos / Segédpultos",
+        "desc": "Nagy nyomás alatti vendéglátás Európa egyik legnagyobb fesztiválján — gyorsaság, csapatmunka és higgadtság a tömegben."
+      }
+    },
+    "education": {
+      "university": {
+        "role": "Mérnökinformatikus BSc",
+        "desc": "Szoftvertervezést, algoritmusokat, adatbázisokat és rendszereket tanultam, rengeteg gyakorlati projektmunkával kiegészítve — beleértve egy full-stack szakdolgozati projektet is."
+      },
+      "highschool": {
+        "role": "Középiskola · Média tagozat",
+        "desc": "Média szakirányos középiskola, ahol elkezdett kialakulni az érdeklődésem a vizuális kommunikáció iránt."
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Kapcsolat",
+    "titleLine1": "Építsünk",
+    "titleLine2": "valamit együtt.",
+    "intro": "Van egy pozíció, egy projekt, vagy csak egy kérdés? A postaládám mindig nyitva áll — hamar válaszolok.",
+    "labelEmail": "E-mail",
+    "labelPhone": "Telefon",
+    "labelLocation": "Helyszín",
+    "labelLinkedin": "LinkedIn",
+    "labelGithub": "GitHub",
+    "locationValue": "Budapest, Magyarország",
+    "formNameLabel": "Név",
+    "formNamePlaceholder": "A neved",
+    "formEmailLabel": "E-mail",
+    "formEmailPlaceholder": "te@example.com",
+    "formMessageLabel": "Üzenet",
+    "formMessagePlaceholder": "Mesélj a pozícióról vagy a projektről…",
+    "sendMessage": "Üzenet küldése",
+    "sending": "Küldés…",
+    "buttonSentEndpoint": "Üzenet sikeresen elküldve",
+    "buttonSentMailto": "Megnyitom az e-mail alkalmazásod",
+    "statusErrorPrefix": "Nem sikerült elküldeni —",
+    "statusErrorLink": "írj közvetlenül e-mailt",
+    "statusSentEndpoint": "✓ Köszönöm — hamarosan jelentkezem.",
+    "statusSentMailto": "✓ Az e-mail alkalmazásodnak most kellene megnyílnia — csak nyomd meg a küldést.",
+    "mailtoSubjectPrefix": "Portfólió üzenet ettől:",
+    "mailtoVisitor": "egy látogató"
+  },
+  "footer": {
+    "tagline": "Frontend fejlesztő · Budapest, HU",
+    "copyrightSuffix": "React, Tailwind CSS és egy natív canvas csillagkép segítségével készült.",
+    "backToTop": "Vissza a tetejére"
+  },
+  "theme": {
+    "toggleToLight": "Váltás világos módra",
+    "toggleToDark": "Váltás sötét módra"
+  },
+  "language": {
+    "switchLabel": "Nyelv váltása"
+  },
+  "modal": {
+    "closeDialog": "Ablak bezárása"
+  }
+}
