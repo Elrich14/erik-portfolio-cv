@@ -1,30 +1,33 @@
 import SectionHeading from './SectionHeading'
 import { PaletteIcon, LayersIcon } from './icons'
-
-const SOFT_SKILLS = [
-  {
-    icon: PaletteIcon,
-    title: 'UI Design & Frontend',
-    body: 'I don’t just implement existing Figma prototypes. When needed, I design interfaces and user flows from scratch and translate them into clean React components.',
-  },
-  {
-    icon: LayersIcon,
-    title: 'Cross-Stack Problem Solving',
-    body: 'While my core focus is frontend, I’m comfortable stepping outside my comfort zone to handle backend or infrastructure tasks whenever a project needs it.',
-  },
-]
+import { useTranslate } from '../i18n/LanguageContext'
 
 export default function About() {
+  const { t, tRich } = useTranslate()
+
+  const SOFT_SKILLS = [
+    {
+      icon: PaletteIcon,
+      title: t('about.skill1Title'),
+      body: t('about.skill1Body'),
+    },
+    {
+      icon: LayersIcon,
+      title: t('about.skill2Title'),
+      body: t('about.skill2Body'),
+    },
+  ]
+
   return (
     <section id="about" className="relative px-4 py-16 sm:px-6 md:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           index="01"
-          eyebrow="About"
+          eyebrow={t('about.eyebrow')}
           title={
             <>
-              A designer&apos;s eye,{' '}
-              <span className="text-gradient">an engineer&apos;s mind.</span>
+              {t('about.titleLine1')}{' '}
+              <span className="text-gradient">{t('about.titleLine2')}</span>
             </>
           }
         />
@@ -36,7 +39,7 @@ export default function About() {
               <div className="relative h-full w-full overflow-hidden rounded-2xl">
                 <img
                   src="/portrait.jpg"
-                  alt="Birkl Erik András"
+                  alt={t('about.portraitCaption')}
                   className="absolute inset-0 h-full w-full object-cover object-[center_38%]"
                 />
                 <div
@@ -44,8 +47,8 @@ export default function About() {
                   className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"
                 />
                 <div className="glass absolute inset-x-3 bottom-3 flex items-center justify-center rounded-xl px-3 py-2">
-                  <span className="font-mono text-xs text-slate-300">
-                    Birkl Erik András
+                  <span className="font-mono text-xs text-text-muted">
+                    {t('about.portraitCaption')}
                   </span>
                 </div>
               </div>
@@ -53,18 +56,11 @@ export default function About() {
           </div>
 
           <div className="md:col-span-3">
-            <p className="text-lg leading-relaxed text-slate-300">
-              I approach every interface as a{' '}
-              <span className="text-slate-100">product</span>, not just a screen.
-              My goal is to build UI/UX that is genuinely functional — fast,
-              accessible and intuitive — while still being{' '}
-              <span className="text-slate-100">beautiful</span> enough that
-              people actually enjoy using it.
+            <p className="text-lg leading-relaxed text-text-muted">
+              {tRich('about.paragraph1')}
             </p>
-            <p className="mt-4 leading-relaxed text-slate-400">
-              I care about the details others skip: the easing of a transition,
-              the contrast of a label, the rhythm of the spacing. That obsession
-              is exactly what a great engineering-meets-design product needs.
+            <p className="mt-4 leading-relaxed text-text-muted">
+              {t('about.paragraph2')}
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -76,10 +72,10 @@ export default function About() {
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand transition-colors group-hover:bg-brand/20">
                     <Icon className="h-5.5 w-5.5" />
                   </div>
-                  <h3 className="mt-4 font-display text-lg font-semibold text-slate-100">
+                  <h3 className="mt-4 font-display text-lg font-semibold text-text">
                     {title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                  <p className="mt-2 text-sm leading-relaxed text-text-muted">
                     {body}
                   </p>
                 </div>
