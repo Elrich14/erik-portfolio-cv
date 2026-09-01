@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useTheme } from '../theme/ThemeContext'
 
 interface Particle {
   x: number
@@ -8,8 +9,36 @@ interface Particle {
   r: number
 }
 
+interface Palette {
+  fill: string
+  link: (alpha: number) => string
+  mouseLink: (alpha: number) => string
+  particle: string
+}
+
+const PALETTES: Record<'dark' | 'light', Palette> = {
+  dark: {
+    fill: '#020617',
+    link: (a) => `rgba(16, 185, 129, ${a})`,
+    mouseLink: (a) => `rgba(59, 130, 246, ${a})`,
+    particle: 'rgba(203, 231, 217, 0.75)',
+  },
+  light: {
+    fill: '#f8fafc',
+    link: (a) => `rgba(5, 150, 105, ${a * 0.6})`,
+    mouseLink: (a) => `rgba(37, 99, 235, ${a * 0.6})`,
+    particle: 'rgba(15, 23, 42, 0.35)',
+  },
+}
+
 export default function ConstellationCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { theme } = useTheme()
+  const paletteRef = useRef<Palette>(PALETTES[theme])
+
+  useEffect(() => {
+    paletteRef.current = PALETTES[theme]
+  }, [theme])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -56,7 +85,9 @@ export default function ConstellationCanvas() {
     }
 
     const draw = () => {
-      ctx.fillStyle = '#020617'
+      const palette = paletteRef.current
+
+      ctx.fillStyle = palette.fill
       ctx.fillRect(0, 0, width, height)
 
       for (const p of particles) {
@@ -79,7 +110,7 @@ export default function ConstellationCanvas() {
           const dist = Math.hypot(dx, dy)
           if (dist < LINK_DIST) {
             const alpha = (1 - dist / LINK_DIST) * 0.18
-            ctx.strokeStyle = `rgba(16, 185, 129, ${alpha})`
+            ctx.strokeStyle = palette.link(alpha)
             ctx.lineWidth = 1
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
@@ -94,7 +125,7 @@ export default function ConstellationCanvas() {
           const dist = Math.hypot(dx, dy)
           if (dist < MOUSE_DIST) {
             const alpha = (1 - dist / MOUSE_DIST) * 0.4
-            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`
+            ctx.strokeStyle = palette.mouseLink(alpha)
             ctx.lineWidth = 1
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
@@ -107,7 +138,7 @@ export default function ConstellationCanvas() {
       for (const p of particles) {
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(203, 231, 217, 0.75)'
+        ctx.fillStyle = palette.particle
         ctx.fill()
       }
     }
