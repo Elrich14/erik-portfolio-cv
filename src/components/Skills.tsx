@@ -1,5 +1,6 @@
 import type { ComponentType, SVGProps } from 'react'
 import SectionHeading from './SectionHeading'
+import { useTranslate } from '../i18n/LanguageContext'
 import {
   CodeIcon,
   LayersIcon,
@@ -17,87 +18,89 @@ interface Category {
   items: string[]
 }
 
-const CATEGORIES: Category[] = [
-  {
-    icon: CodeIcon,
-    title: 'Languages & Core',
-    span: 'lg:col-span-2',
-    items: ['JavaScript', 'TypeScript', 'HTML5', 'CSS3'],
-  },
-  {
-    icon: LayersIcon,
-    title: 'Frameworks & UI',
-    span: 'lg:col-span-4',
-    items: [
-      'React',
-      'React Router',
-      'Redux Toolkit',
-      'MUI',
-      'Emotion',
-      'Formik',
-      'Yup',
-      'Axios',
-      'STOMP.js',
-    ],
-  },
-  {
-    icon: WrenchIcon,
-    title: 'Build & Bundling',
-    span: 'lg:col-span-2',
-    items: ['Webpack', 'Babel', 'React Compiler', 'PostCSS'],
-  },
-  {
-    icon: CheckIcon,
-    title: 'Testing & Quality',
-    span: 'lg:col-span-4',
-    items: ['Jest', 'React Testing Library', 'ESLint', 'Prettier', 'SonarQube'],
-  },
-  {
-    icon: ServerIcon,
-    title: 'Infrastructure & DevOps',
-    span: 'lg:col-span-6',
-    items: [
-      'Git',
-      'Jenkins',
-      'GitHub Actions',
-      'Dependabot',
-      'Docker / Podman',
-      'nginx',
-      'Keycloak',
-      'RabbitMQ',
-      'Active Directory',
-      'i18next',
-      'Agile (Scrum / Kanban)',
-    ],
-  },
-  {
-    icon: BotIcon,
-    title: 'AI-Assisted Development',
-    span: 'lg:col-span-3',
-    items: ['Claude Code', 'GitHub Copilot', 'ChatGPT', 'Gemini'],
-  },
-  {
-    icon: GlobeIcon,
-    title: 'Spoken Languages',
-    span: 'lg:col-span-3',
-    items: ['Hungarian — Native', 'English — B2'],
-  },
-]
-
 export default function Skills() {
+  const { t, tList } = useTranslate()
+
+  const CATEGORIES: Category[] = [
+    {
+      icon: CodeIcon,
+      title: t('skills.categories.languagesCore'),
+      span: 'lg:col-span-2',
+      items: ['JavaScript', 'TypeScript', 'HTML5', 'CSS3'],
+    },
+    {
+      icon: LayersIcon,
+      title: t('skills.categories.frameworksUi'),
+      span: 'lg:col-span-4',
+      items: [
+        'React',
+        'React Router',
+        'Redux Toolkit',
+        'MUI',
+        'Emotion',
+        'Formik',
+        'Yup',
+        'Axios',
+        'STOMP.js',
+      ],
+    },
+    {
+      icon: WrenchIcon,
+      title: t('skills.categories.buildBundling'),
+      span: 'lg:col-span-2',
+      items: ['Webpack', 'Babel', 'React Compiler', 'PostCSS'],
+    },
+    {
+      icon: CheckIcon,
+      title: t('skills.categories.testingQuality'),
+      span: 'lg:col-span-4',
+      items: ['Jest', 'React Testing Library', 'ESLint', 'Prettier', 'SonarQube'],
+    },
+    {
+      icon: ServerIcon,
+      title: t('skills.categories.infraDevops'),
+      span: 'lg:col-span-6',
+      items: [
+        'Git',
+        'Jenkins',
+        'GitHub Actions',
+        'Dependabot',
+        'Docker / Podman',
+        'nginx',
+        'Keycloak',
+        'RabbitMQ',
+        'Active Directory',
+        'i18next',
+        'Agile (Scrum / Kanban)',
+      ],
+    },
+    {
+      icon: BotIcon,
+      title: t('skills.categories.aiAssisted'),
+      span: 'lg:col-span-3',
+      items: ['Claude Code', 'GitHub Copilot', 'ChatGPT', 'Gemini'],
+    },
+    {
+      icon: GlobeIcon,
+      title: t('skills.categories.spokenLanguages'),
+      span: 'lg:col-span-3',
+      items: tList('skills.spokenLanguagesItems'),
+    },
+  ]
+
   return (
     <section id="skills" className="relative px-4 py-16 sm:px-6 md:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           index="02"
-          eyebrow="Skills"
+          eyebrow={t('skills.eyebrow')}
           title={
             <>
-              The toolkit I{' '}
-              <span className="text-gradient">build with.</span>
+              {t('skills.titleLine1')}{' '}
+              <span className="text-gradient">{t('skills.titleLine2')}</span>
             </>
           }
-          intro="From the fundamentals to the frameworks, the pipeline and the AI copilots that speed it all up."
+          intro={t('skills.intro')}
         />
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
@@ -107,10 +110,10 @@ export default function Skills() {
               className={`glass group rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 ${span}`}
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-brand transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-brand transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
                   <Icon className="h-5.5 w-5.5" />
                 </div>
-                <h3 className="font-display text-base font-semibold text-slate-100">
+                <h3 className="font-display text-base font-semibold text-text">
                   {title}
                 </h3>
               </div>
@@ -119,7 +122,7 @@ export default function Skills() {
                 {items.map((item) => (
                   <li
                     key={item}
-                    className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-slate-300 transition-colors hover:border-brand/40 hover:text-brand-soft"
+                    className="rounded-lg border border-border bg-surface-2 px-3 py-1.5 font-mono text-xs text-text-muted transition-colors hover:border-brand/40 hover:text-brand-soft"
                   >
                     {item}
                   </li>
