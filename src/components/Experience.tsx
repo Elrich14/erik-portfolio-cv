@@ -194,13 +194,13 @@ export default function Experience() {
       },
     },
     {
-      period: 'Earlier',
+      period: t('experience.earlierLabel'),
       role: t('experience.work.accountant.role'),
       org: 'Caballo Verde Kft.',
       desc: t('experience.work.accountant.desc'),
     },
     {
-      period: 'Earlier',
+      period: t('experience.earlierLabel'),
       role: t('experience.work.bartender.role'),
       org: 'Sziget Festival',
       desc: t('experience.work.bartender.desc'),
