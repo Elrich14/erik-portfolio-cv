@@ -11,7 +11,7 @@ export default function SectionHeading({ index, eyebrow, title, intro }: Props) 
       <div className="flex items-center justify-center gap-3">
         <span className="h-px w-8 bg-gradient-to-r from-transparent to-brand/60" />
         <span className="eyebrow">
-          <span className="text-brand">{index}</span> · {eyebrow}
+          <span className="text-brand-soft">{index}</span> · {eyebrow}
         </span>
         <span className="h-px w-8 bg-gradient-to-l from-transparent to-brand/60" />
       </div>

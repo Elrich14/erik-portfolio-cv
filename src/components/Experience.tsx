@@ -39,12 +39,12 @@ function PeriodBadge({
   return (
     <div className="flex flex-wrap items-center gap-2">
       {item.done ? (
-        <span className="inline-flex items-center gap-1.5 font-mono text-xs text-brand">
+        <span className="inline-flex items-center gap-1.5 font-mono text-xs text-brand-soft">
           <CheckIcon className="h-3.5 w-3.5" />
           {completedLabel}{item.period ? ` · ${item.period}` : ''}
         </span>
       ) : (
-        <span className="font-mono text-xs tracking-wide text-brand">
+        <span className="font-mono text-xs tracking-wide text-brand-soft">
           {item.period}
         </span>
       )}
@@ -146,7 +146,7 @@ function TimelineColumn({
                 className="glass group block w-full cursor-pointer rounded-2xl p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 focus:outline-none focus-visible:border-brand/60"
               >
                 <CardBody item={item} completedLabel={completedLabel} nowLabel={nowLabel} />
-                <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs text-brand transition-colors group-hover:text-brand-soft">
+                <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs text-brand-soft transition-colors group-hover:text-brand">
                   {viewFullDetails}
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>

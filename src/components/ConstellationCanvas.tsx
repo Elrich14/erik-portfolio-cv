@@ -35,9 +35,11 @@ export default function ConstellationCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { theme } = useTheme()
   const paletteRef = useRef<Palette>(PALETTES[theme])
+  const drawRef = useRef<(() => void) | null>(null)
 
   useEffect(() => {
     paletteRef.current = PALETTES[theme]
+    drawRef.current?.()
   }, [theme])
 
   useEffect(() => {
@@ -143,6 +145,8 @@ export default function ConstellationCanvas() {
       }
     }
 
+    drawRef.current = draw
+
     let raf = 0
     const loop = () => {
       draw()
@@ -195,6 +199,7 @@ export default function ConstellationCanvas() {
       document.removeEventListener('visibilitychange', onVisible)
       window.removeEventListener('mousemove', onMouseMove)
       document.removeEventListener('mouseleave', onMouseLeave)
+      drawRef.current = null
     }
   }, [])
 

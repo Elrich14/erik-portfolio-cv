@@ -24,7 +24,7 @@
 :root[data-theme='light'] {
   color-scheme: light;
 
-  --color-brand-soft: #059669;
+  --color-brand-soft: #047857;
 
   --color-bg: #f8fafc;
   --color-surface: rgba(255, 255, 255, 0.75);
@@ -42,7 +42,7 @@
 
     scroll-padding-top: 2rem;
 
-    background-color: var(--color-ink);
+    background-color: var(--color-bg);
     color-scheme: dark;
 
     overscroll-behavior: none;
@@ -141,6 +141,11 @@
 
 :root[data-theme='light'] .hero-glow {
   opacity: 0.6;
+}
+
+:root[data-theme='light'] ::selection {
+  background: rgba(5, 150, 105, 0.25);
+  color: #022c22;
 }
 
 @keyframes spin {
