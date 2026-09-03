@@ -16,12 +16,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // min-width reserves room for the longer of the EN/HU label at each slot,
+  // so switching language doesn't reflow the navbar (measured from rendered
+  // widths in both languages, plus a small buffer).
   const LINKS = [
-    { label: t('nav.about'), href: '#about' },
-    { label: t('nav.skills'), href: '#skills' },
-    { label: t('nav.projects'), href: '#projects' },
-    { label: t('nav.experience'), href: '#experience' },
+    { label: t('nav.about'), href: '#about', minWidth: 72 },
+    { label: t('nav.skills'), href: '#skills', minWidth: 104 },
+    { label: t('nav.projects'), href: '#projects', minWidth: 104 },
+    { label: t('nav.experience'), href: '#experience', minWidth: 122 },
   ]
+  const CTA_MIN_WIDTH = 174
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -50,7 +54,8 @@ export default function Navbar() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="rounded-lg px-3.5 py-2 font-mono text-[0.8rem] uppercase tracking-wider text-text-muted transition-colors hover:text-brand-soft"
+                  style={{ minWidth: l.minWidth }}
+                  className="inline-block rounded-lg px-3.5 py-2 text-center font-mono text-[0.8rem] uppercase tracking-wider text-text-muted transition-colors hover:text-brand-soft"
                 >
                   {l.label}
                 </a>
@@ -64,7 +69,8 @@ export default function Navbar() {
 
             <a
               href="#contact"
-              className="hidden items-center gap-1.5 rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-sm font-medium text-brand-soft transition-all hover:border-brand/60 hover:bg-brand/20 sm:flex"
+              style={{ minWidth: CTA_MIN_WIDTH }}
+              className="hidden items-center justify-center gap-1.5 rounded-xl border border-brand/30 bg-brand/10 px-4 py-2 text-sm font-medium text-brand-soft transition-all hover:border-brand/60 hover:bg-brand/20 sm:flex"
             >
               {t('common.getInTouch')}
               <ArrowUpRight className="h-4 w-4" />
