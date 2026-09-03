@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import SectionHeading from './SectionHeading'
+import { useTranslate } from '../i18n/LanguageContext'
 import {
   MailIcon,
   PhoneIcon,
@@ -11,39 +12,6 @@ import {
   ArrowUpRight,
 } from './icons'
 
-const DETAILS = [
-  {
-    icon: MailIcon,
-    label: 'Email',
-    value: 'elrich.020114@gmail.com',
-    href: 'mailto:elrich.020114@gmail.com',
-  },
-  {
-    icon: PhoneIcon,
-    label: 'Phone',
-    value: '+36 70 313 6282',
-    href: 'tel:+36703136282',
-  },
-  {
-    icon: MapPinIcon,
-    label: 'Location',
-    value: 'Budapest, Hungary',
-    href: 'https://maps.google.com/?q=Budapest,+Hungary',
-  },
-  {
-    icon: LinkedinIcon,
-    label: 'LinkedIn',
-    value: 'in/erik-andrás-birkl-7b4240306',
-    href: 'https://www.linkedin.com/in/erik-andrás-birkl-7b4240306',
-  },
-  {
-    icon: GithubIcon,
-    label: 'GitHub',
-    value: 'github.com/Elrich14',
-    href: 'https://github.com/Elrich14',
-  },
-]
-
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 
 const ENDPOINT =
@@ -53,8 +21,42 @@ const USES_ENDPOINT = Boolean(ENDPOINT)
 const MY_EMAIL = 'elrich.020114@gmail.com'
 
 export default function Contact() {
+  const { t } = useTranslate()
   const [status, setStatus] = useState<Status>('idle')
   const [form, setForm] = useState({ name: '', email: '', message: '' })
+
+  const DETAILS = [
+    {
+      icon: MailIcon,
+      label: t('contact.labelEmail'),
+      value: 'elrich.020114@gmail.com',
+      href: 'mailto:elrich.020114@gmail.com',
+    },
+    {
+      icon: PhoneIcon,
+      label: t('contact.labelPhone'),
+      value: '+36 70 313 6282',
+      href: 'tel:+36703136282',
+    },
+    {
+      icon: MapPinIcon,
+      label: t('contact.labelLocation'),
+      value: t('contact.locationValue'),
+      href: 'https://maps.google.com/?q=Budapest,+Hungary',
+    },
+    {
+      icon: LinkedinIcon,
+      label: t('contact.labelLinkedin'),
+      value: 'in/erik-andrás-birkl-7b4240306',
+      href: 'https://www.linkedin.com/in/erik-andrás-birkl-7b4240306',
+    },
+    {
+      icon: GithubIcon,
+      label: t('contact.labelGithub'),
+      value: 'github.com/Elrich14',
+      href: 'https://github.com/Elrich14',
+    },
+  ]
 
   const reset = () => {
     setForm({ name: '', email: '', message: '' })
@@ -67,7 +69,7 @@ export default function Contact() {
 
     if (!ENDPOINT) {
       const subject = encodeURIComponent(
-        `Portfolio message from ${form.name || 'a visitor'}`,
+        `${t('contact.mailtoSubjectPrefix')} ${form.name || t('contact.mailtoVisitor')}`,
       )
       const body = encodeURIComponent(
         `${form.message}\n\n— ${form.name} <${form.email}>`,
@@ -96,8 +98,8 @@ export default function Contact() {
 
   const disabled = status === 'sending'
   const sentLabel = USES_ENDPOINT
-    ? 'Message sent successfully'
-    : 'Opening your email app'
+    ? t('contact.buttonSentEndpoint')
+    : t('contact.buttonSentMailto')
 
   return (
     <section id="contact" className="relative px-4 py-16 sm:px-6 md:py-20">
@@ -110,14 +112,14 @@ export default function Contact() {
       <div className="relative mx-auto max-w-6xl">
         <SectionHeading
           index="05"
-          eyebrow="Contact"
+          eyebrow={t('contact.eyebrow')}
           title={
             <>
-              Let&apos;s build{' '}
-              <span className="text-gradient">something.</span>
+              {t('contact.titleLine1')}{' '}
+              <span className="text-gradient">{t('contact.titleLine2')}</span>
             </>
           }
-          intro="Have a role, a project or just a question? My inbox is always open — I’ll get back to you quickly."
+          intro={t('contact.intro')}
         />
 
         <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-5">
@@ -132,18 +134,18 @@ export default function Contact() {
                     rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="glass group flex h-full items-center gap-4 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30"
                   >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-brand transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-brand transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0">
-                      <p className="font-mono text-[0.7rem] uppercase tracking-wider text-slate-500">
+                      <p className="font-mono text-[0.7rem] uppercase tracking-wider text-text-faint">
                         {label}
                       </p>
-                      <p className="truncate text-sm font-medium text-slate-200">
+                      <p className="truncate text-sm font-medium text-text">
                         {value}
                       </p>
                     </div>
-                    <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-slate-600 transition-colors group-hover:text-brand" />
+                    <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-text-faint transition-colors group-hover:text-brand" />
                   </a>
                 </li>
               ))}
@@ -155,18 +157,18 @@ export default function Contact() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field
                   id="name"
-                  label="Name"
+                  label={t('contact.formNameLabel')}
                   type="text"
-                  placeholder="Your name"
+                  placeholder={t('contact.formNamePlaceholder')}
                   value={form.name}
                   disabled={disabled}
                   onChange={(v) => setForm((f) => ({ ...f, name: v }))}
                 />
                 <Field
                   id="email"
-                  label="Email"
+                  label={t('contact.formEmailLabel')}
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder={t('contact.formEmailPlaceholder')}
                   value={form.email}
                   disabled={disabled}
                   onChange={(v) => setForm((f) => ({ ...f, email: v }))}
@@ -176,19 +178,19 @@ export default function Contact() {
               <div className="mt-5 flex flex-1 flex-col">
                 <label
                   htmlFor="message"
-                  className="mb-2 block font-mono text-xs uppercase tracking-wider text-slate-400"
+                  className="mb-2 block font-mono text-xs uppercase tracking-wider text-text-muted"
                 >
-                  Message
+                  {t('contact.formMessageLabel')}
                 </label>
                 <textarea
                   id="message"
                   required
                   rows={5}
-                  placeholder="Tell me about the role or project…"
+                  placeholder={t('contact.formMessagePlaceholder')}
                   value={form.message}
                   disabled={disabled}
                   onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  className="w-full flex-1 resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-100 placeholder:text-slate-600 transition-colors focus:border-brand/50 focus:bg-white/[0.05] focus:outline-none disabled:opacity-60"
+                  className="w-full flex-1 resize-none rounded-xl border border-border bg-surface-2 px-4 py-3 text-text placeholder:text-text-faint transition-colors focus:border-brand/50 focus:bg-surface-2 focus:outline-none disabled:opacity-60"
                 />
               </div>
 
@@ -199,19 +201,19 @@ export default function Contact() {
                   className={`inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-medium transition-all disabled:cursor-not-allowed ${
                     status === 'sent'
                       ? 'bg-brand/15 text-brand-soft'
-                      : 'bg-brand text-emerald-950 shadow-lg shadow-brand/25 hover:-translate-y-0.5 hover:bg-brand-soft disabled:translate-y-0'
+                      : 'bg-brand text-emerald-950 shadow-lg shadow-brand/25 hover:-translate-y-0.5 hover:bg-brand-hover disabled:translate-y-0'
                   }`}
                 >
                   {(status === 'idle' || status === 'error') && (
                     <>
-                      Send message
+                      {t('contact.sendMessage')}
                       <SendIcon className="h-4.5 w-4.5" />
                     </>
                   )}
                   {status === 'sending' && (
                     <>
                       <span className="h-4.5 w-4.5 animate-spin rounded-full border-2 border-emerald-950/30 border-t-emerald-950" />
-                      Sending…
+                      {t('contact.sending')}
                     </>
                   )}
                   {status === 'sent' && (
@@ -225,20 +227,20 @@ export default function Contact() {
                 <p aria-live="polite" className="font-mono text-xs">
                   {status === 'error' ? (
                     <span className="text-rose-400">
-                      Couldn&apos;t send —{' '}
+                      {t('contact.statusErrorPrefix')}{' '}
                       <a
                         href={`mailto:${MY_EMAIL}`}
                         className="underline transition-colors hover:text-rose-300"
                       >
-                        email me directly
+                        {t('contact.statusErrorLink')}
                       </a>
                       .
                     </span>
                   ) : status === 'sent' ? (
                     <span className="text-brand-soft">
                       {USES_ENDPOINT
-                        ? '✓ Thanks — I’ll be in touch.'
-                        : '✓ Your email app should open — just hit send.'}
+                        ? t('contact.statusSentEndpoint')
+                        : t('contact.statusSentMailto')}
                     </span>
                   ) : null}
                 </p>
@@ -266,7 +268,7 @@ function Field({ id, label, type, placeholder, value, disabled, onChange }: Fiel
     <div>
       <label
         htmlFor={id}
-        className="mb-2 block font-mono text-xs uppercase tracking-wider text-slate-400"
+        className="mb-2 block font-mono text-xs uppercase tracking-wider text-text-muted"
       >
         {label}
       </label>
@@ -278,7 +280,7 @@ function Field({ id, label, type, placeholder, value, disabled, onChange }: Fiel
         value={value}
         disabled={disabled}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-slate-100 placeholder:text-slate-600 transition-colors focus:border-brand/50 focus:bg-white/[0.05] focus:outline-none disabled:opacity-60"
+        className="w-full rounded-xl border border-border bg-surface-2 px-4 py-3 text-text placeholder:text-text-faint transition-colors focus:border-brand/50 focus:bg-surface-2 focus:outline-none disabled:opacity-60"
       />
     </div>
   )
