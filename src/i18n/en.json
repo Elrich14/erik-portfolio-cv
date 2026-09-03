@@ -1,0 +1,170 @@
+{
+  "common": {
+    "getInTouch": "Get in touch"
+  },
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "badge": "Open to Remote & Hybrid opportunities",
+    "greeting": "Hi, I'm",
+    "name": "Erik András Birkl.",
+    "closing": "",
+    "title": "Software Engineer",
+    "subtitle": "I build clean, reliable interfaces with React and TypeScript — and I like knowing what's happening underneath them too.",
+    "factLocation": "Budapest, HU",
+    "factLanguage": "EN · B2",
+    "factRole": "Frontend @ Vidux"
+  },
+  "about": {
+    "eyebrow": "About",
+    "titleLine1": "A designer's eye,",
+    "titleLine2": "an engineer's mind.",
+    "portraitCaption": "Birkl Erik András",
+    "paragraph1": "I approach every interface as a <em>product</em>, not just a screen. My goal is to build UI/UX that is genuinely functional — fast, accessible and intuitive — while still being <em>beautiful</em> enough that people actually enjoy using it.",
+    "paragraph2": "I care about the details others skip: the easing of a transition, the contrast of a label, the rhythm of the spacing. That obsession is exactly what a great engineering-meets-design product needs.",
+    "skill1Title": "UI Design & Frontend",
+    "skill1Body": "I don't just implement existing Figma prototypes. When needed, I design interfaces and user flows from scratch and translate them into clean React components.",
+    "skill2Title": "Cross-Stack Problem Solving",
+    "skill2Body": "While my core focus is frontend, I'm comfortable stepping outside my comfort zone to handle backend or infrastructure tasks whenever a project needs it."
+  },
+  "skills": {
+    "eyebrow": "Skills",
+    "titleLine1": "The toolkit I",
+    "titleLine2": "build with.",
+    "intro": "From the fundamentals to the frameworks, the pipeline and the AI copilots that speed it all up.",
+    "categories": {
+      "languagesCore": "Languages & Core",
+      "frameworksUi": "Frameworks & UI",
+      "buildBundling": "Build & Bundling",
+      "testingQuality": "Testing & Quality",
+      "infraDevops": "Infrastructure & DevOps",
+      "aiAssisted": "AI-Assisted Development",
+      "spokenLanguages": "Spoken Languages"
+    },
+    "spokenLanguagesItems": ["Hungarian — Native", "English — B2"]
+  },
+  "projects": {
+    "eyebrow": "Projects",
+    "titleLine1": "Building beyond",
+    "titleLine2": "the day job.",
+    "intro": "A full-stack project I designed, built and shipped solo, end to end.",
+    "kerian": {
+      "badge": "Thesis project · Solo build",
+      "inProgressLabel": "In Progress",
+      "tagline": "Full-stack e-commerce, built solo — still a work in progress.",
+      "description": "A clothing e-commerce platform I'm designing and building solo as my thesis project — UI concept, database schema, REST backend and a real Stripe checkout. Customers can already browse and filter by size, colour and gender, manage a cart and wishlist, and pay by card, while I keep extending the admin side and polishing the rest.",
+      "highlightAiTitle": "AI Product Recommendations",
+      "highlightAiBody": "Claude Haiku 4.5 suggests cart-matching items by style and colour — never something already in the basket.",
+      "highlightStripeTitle": "Stripe Checkout",
+      "highlightStripeBody": "End-to-end online card payments, from cart to order confirmation.",
+      "highlightAdminTitle": "2FA Admin & Analytics",
+      "highlightAdminBody": "TOTP-secured admin panel with a live revenue, order and trend dashboard.",
+      "highlightInventoryTitle": "Concurrency-Safe Inventory",
+      "highlightInventoryBody": "Pessimistic row locking keeps stock from going negative under simultaneous orders.",
+      "cta": "View source on GitHub"
+    }
+  },
+  "experience": {
+    "eyebrow": "Experience & Education",
+    "titleLine1": "The path",
+    "titleLine2": "so far.",
+    "intro": "Two separate tracks — where I've worked, and where I've studied. Tap a highlighted role for the full story.",
+    "workLabel": "Work",
+    "educationLabel": "Education",
+    "completedLabel": "Completed",
+    "earlierLabel": "Earlier",
+    "nowLabel": "Now",
+    "viewFullDetails": "View full details",
+    "modalWhatIDid": "What I did",
+    "modalTechStackUsed": "Tech stack used",
+    "work": {
+      "vidux": {
+        "role": "Frontend Developer",
+        "desc": "Building and maintaining a React / TypeScript frontend and a reusable UI component library. Translating Figma designs into pixel-accurate interfaces and integrating backend APIs for live video in the banking sector.",
+        "detailSubtitle": "IP-based security systems & video recording solutions for the banking sector.",
+        "detailBullets": [
+          "Building web frontends with React / TypeScript and JavaScript, continuously improving the user experience and interface design.",
+          "Collaborating closely with designers through Figma to make sure every UI layout meets the exact specifications.",
+          "Participating in agile development processes, improving project delivery and overall team efficiency.",
+          "Integrated the frontend with backend APIs to display live video streams, device status, analytics dashboards and alarm handling.",
+          "Developed and maintained a private npm package of shared UI components — ensuring design consistency and accelerating development across multiple company projects.",
+          "Contributed to backend tasks by writing database migration scripts, helping balance team capacity and support project delivery."
+        ],
+        "stackGroups": {
+          "languagesCore": "Languages & Core",
+          "frameworksLibraries": "Frameworks & Libraries",
+          "infraTools": "Infrastructure & Tools",
+          "aiAssisted": "AI-Assisted Development",
+          "methodology": "Methodology"
+        }
+      },
+      "accountant": {
+        "role": "Data-entry Accountant",
+        "desc": "Accounting data entry and administration — precision, ownership and comfort working with structured data."
+      },
+      "bartender": {
+        "role": "Bartender / Barback",
+        "desc": "High-pressure hospitality at one of Europe's largest festivals — speed, teamwork and grace under a crowd."
+      }
+    },
+    "education": {
+      "university": {
+        "role": "Computer Science Engineering, BSc",
+        "desc": "Studied software engineering, algorithms, databases and systems, combined with plenty of hands-on project work — including a full-stack thesis project."
+      },
+      "highschool": {
+        "role": "High School · Media",
+        "desc": "High school with a Media specialization, where an early interest in visual communication took shape."
+      }
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "titleLine1": "Let's build",
+    "titleLine2": "something.",
+    "intro": "Have a role, a project or just a question? My inbox is always open — I'll get back to you quickly.",
+    "labelEmail": "Email",
+    "labelPhone": "Phone",
+    "labelLocation": "Location",
+    "labelLinkedin": "LinkedIn",
+    "labelGithub": "GitHub",
+    "locationValue": "Budapest, Hungary",
+    "formNameLabel": "Name",
+    "formNamePlaceholder": "Your name",
+    "formEmailLabel": "Email",
+    "formEmailPlaceholder": "you@example.com",
+    "formMessageLabel": "Message",
+    "formMessagePlaceholder": "Tell me about the role or project…",
+    "sendMessage": "Send message",
+    "sending": "Sending…",
+    "buttonSentEndpoint": "Message sent successfully",
+    "buttonSentMailto": "Opening your email app",
+    "statusErrorPrefix": "Couldn't send —",
+    "statusErrorLink": "email me directly",
+    "statusSentEndpoint": "✓ Thanks — I'll be in touch.",
+    "statusSentMailto": "✓ Your email app should open — just hit send.",
+    "mailtoSubjectPrefix": "Portfolio message from",
+    "mailtoVisitor": "a visitor"
+  },
+  "footer": {
+    "tagline": "Frontend Developer · Budapest, HU",
+    "copyrightSuffix": "Built with React, Tailwind CSS & a native canvas constellation.",
+    "backToTop": "Back to top"
+  },
+  "theme": {
+    "toggleToLight": "Switch to light mode",
+    "toggleToDark": "Switch to dark mode"
+  },
+  "language": {
+    "switchLabel": "Switch language"
+  },
+  "modal": {
+    "closeDialog": "Close dialog"
+  }
+}

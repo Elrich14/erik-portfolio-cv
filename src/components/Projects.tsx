@@ -1,5 +1,6 @@
 import type { ComponentType, SVGProps } from 'react'
 import SectionHeading from './SectionHeading'
+import { useTranslate } from '../i18n/LanguageContext'
 import {
   BotIcon,
   CreditCardIcon,
@@ -18,59 +19,15 @@ interface Highlight {
 interface Project {
   badge: string
   inProgress?: boolean
+  inProgressLabel: string
   name: string
   tagline: string
   description: string
   highlights: Highlight[]
   stack: string[]
   repo: string
+  cta: string
 }
-
-const PROJECTS: Project[] = [
-  {
-    badge: 'Thesis project · Solo build',
-    inProgress: true,
-    name: 'KERIAN Webshop',
-    tagline: 'Full-stack e-commerce, built solo — still a work in progress.',
-    description:
-      "A clothing e-commerce platform I'm designing and building solo as my thesis project — UI concept, database schema, REST backend and a real Stripe checkout. Customers can already browse and filter by size, colour and gender, manage a cart and wishlist, and pay by card, while I keep extending the admin side and polishing the rest.",
-    highlights: [
-      {
-        icon: BotIcon,
-        title: 'AI Product Recommendations',
-        body: 'Claude Haiku 4.5 suggests cart-matching items by style and colour — never something already in the basket.',
-      },
-      {
-        icon: CreditCardIcon,
-        title: 'Stripe Checkout',
-        body: 'End-to-end online card payments, from cart to order confirmation.',
-      },
-      {
-        icon: ShieldIcon,
-        title: '2FA Admin & Analytics',
-        body: 'TOTP-secured admin panel with a live revenue, order and trend dashboard.',
-      },
-      {
-        icon: ServerIcon,
-        title: 'Concurrency-Safe Inventory',
-        body: 'Pessimistic row locking keeps stock from going negative under simultaneous orders.',
-      },
-    ],
-    stack: [
-      'Next.js 15',
-      'TypeScript',
-      'Express.js',
-      'PostgreSQL',
-      'Sequelize',
-      'Zustand',
-      'TanStack Query',
-      'Stripe',
-      'Docker',
-      'Claude AI',
-    ],
-    repo: 'https://github.com/Elrich14/BirklSzakdoga',
-  },
-]
 
 function ProjectCard({ project }: { project: Project }) {
   return (
@@ -85,19 +42,19 @@ function ProjectCard({ project }: { project: Project }) {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
             </span>
-            In Progress
+            {project.inProgressLabel}
           </span>
         )}
       </div>
 
-      <h3 className="mt-4 font-display text-2xl font-semibold text-slate-100 sm:text-3xl">
+      <h3 className="mt-4 font-display text-2xl font-semibold text-text sm:text-3xl">
         {project.name}
       </h3>
-      <p className="mt-1.5 text-base font-medium text-slate-300">
+      <p className="mt-1.5 text-base font-medium text-text-muted">
         {project.tagline}
       </p>
 
-      <p className="mt-5 max-w-3xl leading-relaxed text-slate-400">
+      <p className="mt-5 max-w-3xl leading-relaxed text-text-muted">
         {project.description}
       </p>
 
@@ -105,15 +62,15 @@ function ProjectCard({ project }: { project: Project }) {
         {project.highlights.map(({ icon: Icon, title, body }) => (
           <div
             key={title}
-            className="group rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30"
+            className="group rounded-2xl border border-border bg-surface-2 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30"
           >
             <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-brand/20 bg-brand/10 text-brand transition-colors group-hover:bg-brand/20">
               <Icon className="h-5.5 w-5.5" />
             </div>
-            <h4 className="mt-4 font-display text-base font-semibold text-slate-100">
+            <h4 className="mt-4 font-display text-base font-semibold text-text">
               {title}
             </h4>
-            <p className="mt-1.5 text-sm leading-relaxed text-slate-400">
+            <p className="mt-1.5 text-sm leading-relaxed text-text-muted">
               {body}
             </p>
           </div>
@@ -124,7 +81,7 @@ function ProjectCard({ project }: { project: Project }) {
         {project.stack.map((item) => (
           <li
             key={item}
-            className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-slate-300 transition-colors hover:border-brand/40 hover:text-brand-soft"
+            className="rounded-lg border border-border bg-surface-2 px-3 py-1.5 font-mono text-xs text-text-muted transition-colors hover:border-brand/40 hover:text-brand-soft"
           >
             {item}
           </li>
@@ -135,10 +92,10 @@ function ProjectCard({ project }: { project: Project }) {
         href={project.repo}
         target="_blank"
         rel="noopener noreferrer"
-        className="group mt-8 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 font-medium text-slate-200 backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:bg-brand/10 hover:text-white"
+        className="group mt-8 inline-flex items-center gap-2 rounded-xl border border-border bg-surface-2 px-5 py-3 font-medium text-text backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:bg-brand/10 hover:text-text"
       >
         <GithubIcon className="h-4.5 w-4.5" />
-        View source on GitHub
+        {project.cta}
         <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
       </a>
     </div>
@@ -146,19 +103,68 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function Projects() {
+  const { t } = useTranslate()
+
+  const PROJECTS: Project[] = [
+    {
+      badge: t('projects.kerian.badge'),
+      inProgress: true,
+      inProgressLabel: t('projects.kerian.inProgressLabel'),
+      name: 'KERIAN Webshop',
+      tagline: t('projects.kerian.tagline'),
+      description: t('projects.kerian.description'),
+      highlights: [
+        {
+          icon: BotIcon,
+          title: t('projects.kerian.highlightAiTitle'),
+          body: t('projects.kerian.highlightAiBody'),
+        },
+        {
+          icon: CreditCardIcon,
+          title: t('projects.kerian.highlightStripeTitle'),
+          body: t('projects.kerian.highlightStripeBody'),
+        },
+        {
+          icon: ShieldIcon,
+          title: t('projects.kerian.highlightAdminTitle'),
+          body: t('projects.kerian.highlightAdminBody'),
+        },
+        {
+          icon: ServerIcon,
+          title: t('projects.kerian.highlightInventoryTitle'),
+          body: t('projects.kerian.highlightInventoryBody'),
+        },
+      ],
+      stack: [
+        'Next.js 15',
+        'TypeScript',
+        'Express.js',
+        'PostgreSQL',
+        'Sequelize',
+        'Zustand',
+        'TanStack Query',
+        'Stripe',
+        'Docker',
+        'Claude AI',
+      ],
+      repo: 'https://github.com/Elrich14/BirklSzakdoga',
+      cta: t('projects.kerian.cta'),
+    },
+  ]
+
   return (
     <section id="projects" className="relative px-4 py-16 sm:px-6 md:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           index="03"
-          eyebrow="Projects"
+          eyebrow={t('projects.eyebrow')}
           title={
             <>
-              Building beyond{' '}
-              <span className="text-gradient">the day job.</span>
+              {t('projects.titleLine1')}{' '}
+              <span className="text-gradient">{t('projects.titleLine2')}</span>
             </>
           }
-          intro="A full-stack project I designed, built and shipped solo, end to end."
+          intro={t('projects.intro')}
         />
 
         <div className="mt-12 space-y-8">

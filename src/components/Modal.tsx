@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { CloseIcon } from './icons'
+import { useTranslate } from '../i18n/LanguageContext'
 
 interface Props {
   open: boolean
@@ -12,6 +13,7 @@ interface Props {
 export default function Modal({ open, onClose, labelledBy, children }: Props) {
   const panelRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
+  const { t } = useTranslate()
 
   useEffect(() => {
     if (!open) return
@@ -67,14 +69,14 @@ export default function Modal({ open, onClose, labelledBy, children }: Props) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledBy}
-        className="glass modal-pop relative my-auto w-full max-w-2xl rounded-3xl bg-slate-900/85 p-6 shadow-2xl shadow-black/60 sm:p-8"
+        className="glass modal-pop relative my-auto w-full max-w-2xl rounded-3xl bg-surface-strong p-6 shadow-2xl shadow-black/60 sm:p-8"
       >
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
-          aria-label="Close dialog"
-          className="glass absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-xl text-slate-300 transition-colors hover:text-brand"
+          aria-label={t('modal.closeDialog')}
+          className="glass absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-xl text-text-muted transition-colors hover:text-brand"
         >
           <CloseIcon className="h-5 w-5" />
         </button>
