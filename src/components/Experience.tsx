@@ -3,6 +3,7 @@ import type { ComponentType, SVGProps } from 'react'
 import SectionHeading from './SectionHeading'
 import Modal from './Modal'
 import { BriefcaseIcon, CapIcon, CheckIcon, ArrowUpRight } from './icons'
+import { useTranslate } from '../i18n/LanguageContext'
 
 interface StackGroup {
   group: string
@@ -26,78 +27,21 @@ interface Item {
   detail?: Detail
 }
 
-const WORK: Item[] = [
-  {
-    period: 'Aug 2024 — Present',
-    current: true,
-    role: 'Frontend Developer',
-    org: 'Vidux Informatikai Kft.',
-    desc: 'Building and maintaining a React / TypeScript frontend and a reusable UI component library. Translating Figma designs into pixel-accurate interfaces and integrating backend APIs for live video in the banking sector.',
-    tags: ['React', 'TypeScript', 'Figma', 'UI Library', 'REST APIs'],
-    detail: {
-      subtitle:
-        'IP-based security systems & video recording solutions for the banking sector.',
-      bullets: [
-        'Building web frontends with React / TypeScript and JavaScript, continuously improving the user experience and interface design.',
-        'Collaborating closely with designers through Figma to make sure every UI layout meets the exact specifications.',
-        'Participating in agile development processes, improving project delivery and overall team efficiency.',
-        'Integrated the frontend with backend APIs to display live video streams, device status, analytics dashboards and alarm handling.',
-        'Developed and maintained a private npm package of shared UI components — ensuring design consistency and accelerating development across multiple company projects.',
-        'Contributed to backend tasks by writing database migration scripts, helping balance team capacity and support project delivery.',
-      ],
-      stack: [
-        { group: 'Languages & Core', items: ['JavaScript', 'TypeScript', 'HTML5', 'CSS3'] },
-        { group: 'Frameworks & Libraries', items: ['React', 'Material UI', 'Jest'] },
-        {
-          group: 'Infrastructure & Tools',
-          items: ['Git', 'Jenkins', 'SonarQube', 'Keycloak', 'RabbitMQ', 'Active Directory'],
-        },
-        {
-          group: 'AI-Assisted Development',
-          items: ['Claude Code', 'GitHub Copilot', 'ChatGPT', 'Gemini'],
-        },
-        { group: 'Methodology', items: ['Agile (Scrum / Kanban)'] },
-      ],
-    },
-  },
-  {
-    period: 'Earlier',
-    role: 'Data-entry Accountant',
-    org: 'Caballo Verde Kft.',
-    desc: 'Accounting data entry and administration — precision, ownership and comfort working with structured data.',
-  },
-  {
-    period: 'Earlier',
-    role: 'Bartender / Barback',
-    org: 'Sziget Festival',
-    desc: 'High-pressure hospitality at one of Europe’s largest festivals — speed, teamwork and grace under a crowd.',
-  },
-]
-
-const EDUCATION: Item[] = [
-  {
-    done: true,
-    period: '2026',
-    role: 'Computer Science Engineering, BSc',
-    org: 'University of Szeged',
-    desc: 'Studied software engineering, algorithms, databases and systems, combined with plenty of hands-on project work — including a full-stack thesis project.',
-    tags: ['Software Engineering', 'Algorithms', 'Databases'],
-  },
-  {
-    done: true,
-    role: 'High School · Media',
-    org: 'Deák Ferenc Gimnázium, Kispest',
-    desc: 'High school with a Media specialization, where an early interest in visual communication took shape.',
-  },
-]
-
-function PeriodBadge({ item }: { item: Item }) {
+function PeriodBadge({
+  item,
+  completedLabel,
+  nowLabel,
+}: {
+  item: Item
+  completedLabel: string
+  nowLabel: string
+}) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       {item.done ? (
         <span className="inline-flex items-center gap-1.5 font-mono text-xs text-brand">
           <CheckIcon className="h-3.5 w-3.5" />
-          Completed{item.period ? ` · ${item.period}` : ''}
+          {completedLabel}{item.period ? ` · ${item.period}` : ''}
         </span>
       ) : (
         <span className="font-mono text-xs tracking-wide text-brand">
@@ -106,30 +50,38 @@ function PeriodBadge({ item }: { item: Item }) {
       )}
       {item.current && (
         <span className="rounded-full border border-brand/30 bg-brand/10 px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-wider text-brand-soft">
-          Now
+          {nowLabel}
         </span>
       )}
     </div>
   )
 }
 
-function CardBody({ item }: { item: Item }) {
+function CardBody({
+  item,
+  completedLabel,
+  nowLabel,
+}: {
+  item: Item
+  completedLabel: string
+  nowLabel: string
+}) {
   return (
     <>
-      <PeriodBadge item={item} />
-      <h4 className="mt-2 font-display text-lg font-semibold text-slate-100">
+      <PeriodBadge item={item} completedLabel={completedLabel} nowLabel={nowLabel} />
+      <h4 className="mt-2 font-display text-lg font-semibold text-text">
         {item.role}
       </h4>
-      <p className="mt-0.5 text-sm font-medium text-slate-300">{item.org}</p>
-      <p className="mt-3 text-sm leading-relaxed text-slate-400">{item.desc}</p>
+      <p className="mt-0.5 text-sm font-medium text-text-muted">{item.org}</p>
+      <p className="mt-3 text-sm leading-relaxed text-text-muted">{item.desc}</p>
       {item.tags && (
         <ul className="mt-4 flex flex-wrap gap-2">
-          {item.tags.map((t) => (
+          {item.tags.map((tag) => (
             <li
-              key={t}
-              className="rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[0.7rem] text-slate-400"
+              key={tag}
+              className="rounded-lg border border-border bg-surface-2 px-2.5 py-1 font-mono text-[0.7rem] text-text-muted"
             >
-              {t}
+              {tag}
             </li>
           ))}
         </ul>
@@ -143,11 +95,17 @@ function TimelineColumn({
   icon: Icon,
   items,
   onOpen,
+  completedLabel,
+  nowLabel,
+  viewFullDetails,
 }: {
   label: string
   icon: ComponentType<SVGProps<SVGSVGElement>>
   items: Item[]
   onOpen: (item: Item) => void
+  completedLabel: string
+  nowLabel: string
+  viewFullDetails: string
 }) {
   return (
     <div>
@@ -156,7 +114,7 @@ function TimelineColumn({
         <span className="glass flex h-11 w-11 items-center justify-center rounded-xl text-brand">
           <Icon className="h-5 w-5" />
         </span>
-        <h3 className="font-display text-xl font-semibold text-slate-100">
+        <h3 className="font-display text-xl font-semibold text-text">
           {label}
         </h3>
       </div>
@@ -165,7 +123,7 @@ function TimelineColumn({
 
         <span
           aria-hidden
-          className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-brand/50 via-white/10 to-transparent"
+          className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-brand/50 via-border to-transparent"
         />
 
         {items.map((item, i) => (
@@ -176,7 +134,7 @@ function TimelineColumn({
               {item.current && (
                 <span className="absolute -right-0.5 -top-0.5 flex h-2.5 w-2.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-70" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand ring-2 ring-slate-950" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand ring-2 ring-bg" />
                 </span>
               )}
             </span>
@@ -187,15 +145,15 @@ function TimelineColumn({
                 onClick={() => onOpen(item)}
                 className="glass group block w-full cursor-pointer rounded-2xl p-5 text-left transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/40 focus:outline-none focus-visible:border-brand/60"
               >
-                <CardBody item={item} />
+                <CardBody item={item} completedLabel={completedLabel} nowLabel={nowLabel} />
                 <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs text-brand transition-colors group-hover:text-brand-soft">
-                  View full details
+                  {viewFullDetails}
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </button>
             ) : (
               <div className="glass rounded-2xl p-5 transition-all duration-300 hover:border-brand/30">
-                <CardBody item={item} />
+                <CardBody item={item} completedLabel={completedLabel} nowLabel={nowLabel} />
               </div>
             )}
           </li>
@@ -207,24 +165,102 @@ function TimelineColumn({
 
 export default function Experience() {
   const [detail, setDetail] = useState<Item | null>(null)
+  const { t, tList } = useTranslate()
+
+  const WORK: Item[] = [
+    {
+      period: 'Aug 2024 — Present',
+      current: true,
+      role: t('experience.work.vidux.role'),
+      org: 'Vidux Informatikai Kft.',
+      desc: t('experience.work.vidux.desc'),
+      tags: ['React', 'TypeScript', 'Figma', 'UI Library', 'REST APIs'],
+      detail: {
+        subtitle: t('experience.work.vidux.detailSubtitle'),
+        bullets: tList('experience.work.vidux.detailBullets'),
+        stack: [
+          { group: t('experience.work.vidux.stackGroups.languagesCore'), items: ['JavaScript', 'TypeScript', 'HTML5', 'CSS3'] },
+          { group: t('experience.work.vidux.stackGroups.frameworksLibraries'), items: ['React', 'Material UI', 'Jest'] },
+          {
+            group: t('experience.work.vidux.stackGroups.infraTools'),
+            items: ['Git', 'Jenkins', 'SonarQube', 'Keycloak', 'RabbitMQ', 'Active Directory'],
+          },
+          {
+            group: t('experience.work.vidux.stackGroups.aiAssisted'),
+            items: ['Claude Code', 'GitHub Copilot', 'ChatGPT', 'Gemini'],
+          },
+          { group: t('experience.work.vidux.stackGroups.methodology'), items: ['Agile (Scrum / Kanban)'] },
+        ],
+      },
+    },
+    {
+      period: 'Earlier',
+      role: t('experience.work.accountant.role'),
+      org: 'Caballo Verde Kft.',
+      desc: t('experience.work.accountant.desc'),
+    },
+    {
+      period: 'Earlier',
+      role: t('experience.work.bartender.role'),
+      org: 'Sziget Festival',
+      desc: t('experience.work.bartender.desc'),
+    },
+  ]
+
+  const EDUCATION: Item[] = [
+    {
+      done: true,
+      period: '2026',
+      role: t('experience.education.university.role'),
+      org: 'University of Szeged',
+      desc: t('experience.education.university.desc'),
+      tags: ['Software Engineering', 'Algorithms', 'Databases'],
+    },
+    {
+      done: true,
+      role: t('experience.education.highschool.role'),
+      org: 'Deák Ferenc Gimnázium, Kispest',
+      desc: t('experience.education.highschool.desc'),
+    },
+  ]
+
+  const completedLabel = t('experience.completedLabel')
+  const nowLabel = t('experience.nowLabel')
+  const viewFullDetails = t('experience.viewFullDetails')
 
   return (
     <section id="experience" className="relative px-4 py-16 sm:px-6 md:py-20">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           index="04"
-          eyebrow="Experience & Education"
+          eyebrow={t('experience.eyebrow')}
           title={
             <>
-              The path <span className="text-gradient">so far.</span>
+              {t('experience.titleLine1')} <span className="text-gradient">{t('experience.titleLine2')}</span>
             </>
           }
-          intro="Two separate tracks — where I’ve worked, and where I’ve studied. Tap a highlighted role for the full story."
+          intro={t('experience.intro')}
         />
 
         <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-12">
-          <TimelineColumn label="Work" icon={BriefcaseIcon} items={WORK} onOpen={setDetail} />
-          <TimelineColumn label="Education" icon={CapIcon} items={EDUCATION} onOpen={setDetail} />
+          <TimelineColumn
+            label={t('experience.workLabel')}
+            icon={BriefcaseIcon}
+            items={WORK}
+            onOpen={setDetail}
+            completedLabel={completedLabel}
+            nowLabel={nowLabel}
+            viewFullDetails={viewFullDetails}
+          />
+          <TimelineColumn
+            label={t('experience.educationLabel')}
+            icon={CapIcon}
+            items={EDUCATION}
+            onOpen={setDetail}
+            completedLabel={completedLabel}
+            nowLabel={nowLabel}
+            viewFullDetails={viewFullDetails}
+          />
         </div>
       </div>
 
@@ -240,45 +276,45 @@ export default function Experience() {
                 <BriefcaseIcon className="h-6 w-6" />
               </span>
               <div>
-                <PeriodBadge item={detail} />
+                <PeriodBadge item={detail} completedLabel={completedLabel} nowLabel={nowLabel} />
                 <h3
                   id="exp-detail-title"
-                  className="mt-1.5 font-display text-2xl font-semibold text-slate-100"
+                  className="mt-1.5 font-display text-2xl font-semibold text-text"
                 >
                   {detail.role}
                 </h3>
-                <p className="text-sm font-medium text-slate-300">{detail.org}</p>
+                <p className="text-sm font-medium text-text-muted">{detail.org}</p>
               </div>
             </div>
 
-            <p className="mt-5 text-sm leading-relaxed text-slate-400">
+            <p className="mt-5 text-sm leading-relaxed text-text-muted">
               {detail.detail.subtitle}
             </p>
 
-            <h4 className="eyebrow mt-7">What I did</h4>
+            <h4 className="eyebrow mt-7">{t('experience.modalWhatIDid')}</h4>
             <ul className="mt-3 space-y-2.5">
               {detail.detail.bullets.map((b, i) => (
-                <li key={i} className="flex gap-3 text-sm leading-relaxed text-slate-300">
+                <li key={i} className="flex gap-3 text-sm leading-relaxed text-text-muted">
                   <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
                   <span>{b}</span>
                 </li>
               ))}
             </ul>
 
-            <h4 className="eyebrow mt-7">Tech stack used</h4>
+            <h4 className="eyebrow mt-7">{t('experience.modalTechStackUsed')}</h4>
             <div className="mt-3 space-y-3">
               {detail.detail.stack.map(({ group, items }) => (
                 <div key={group}>
-                  <p className="font-mono text-[0.7rem] uppercase tracking-wider text-slate-500">
+                  <p className="font-mono text-[0.7rem] uppercase tracking-wider text-text-faint">
                     {group}
                   </p>
                   <ul className="mt-1.5 flex flex-wrap gap-2">
-                    {items.map((t) => (
+                    {items.map((tItem) => (
                       <li
-                        key={t}
-                        className="rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[0.7rem] text-slate-300"
+                        key={tItem}
+                        className="rounded-lg border border-border bg-surface-2 px-2.5 py-1 font-mono text-[0.7rem] text-text-muted"
                       >
-                        {t}
+                        {tItem}
                       </li>
                     ))}
                   </ul>
