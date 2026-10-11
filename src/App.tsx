@@ -1,5 +1,4 @@
-import ConstellationCanvas from './components/ConstellationCanvas'
-import Navbar from './components/Navbar'
+import TramNavbar from './components/TramNavbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
@@ -11,13 +10,7 @@ import Footer from './components/Footer'
 export default function App() {
   return (
     <>
-
-      <ConstellationCanvas />
-
-      <div className="grain" aria-hidden />
-
-      <Navbar />
-
+      <TramNavbar />
       <main>
         <Hero />
         <About />
@@ -26,7 +19,6 @@ export default function App() {
         <Experience />
         <Contact />
       </main>
-
       <Footer />
     </>
   )

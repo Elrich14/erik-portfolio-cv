@@ -1,52 +1,62 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
 
-  --color-brand: #10b981;
-  --color-brand-soft: #34d399;
-  --color-brand-hover: #34d399;
-  --color-accent: #3b82f6;
-  --color-ink: #020617;
-
-  --color-bg: #020617;
-  --color-surface: rgba(15, 23, 42, 0.8);
-  --color-surface-2: rgba(255, 255, 255, 0.03);
-  --color-surface-strong: rgba(2, 6, 23, 0.85);
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-text: #f1f5f9;
-  --color-text-muted: #94a3b8;
-  --color-text-faint: #64748b;
+  /* Day: warm paper and ink. Night overrides these below. */
+  --color-bg: #f3efe6;
+  --color-paper: #fffdf8;
+  --color-bar: #ece6d9;
+  --color-ink: #1b1a17;
+  --color-text: #1b1a17;
+  --color-muted: #4a453d;
+  --color-faint: #6b655b;
+  --color-hair: #d6cdbc;
+  --color-tram: #f2c230;
+  --color-danger: #a8321c;
 }
 
-:root[data-theme='light'] {
-  color-scheme: light;
+:root {
+  --tram-window: #fbf8f1;
+  --tram-wheel: #1b1a17;
+  --conductor-navy: #2e3a55;
+}
 
-  --color-brand-soft: #047857;
+:root[data-theme='dark'] {
+  color-scheme: dark;
 
-  --color-bg: #f8fafc;
-  --color-surface: rgba(255, 255, 255, 0.75);
-  --color-surface-2: rgba(15, 23, 42, 0.035);
-  --color-surface-strong: rgba(255, 255, 255, 0.92);
-  --color-border: rgba(15, 23, 42, 0.08);
-  --color-text: #0f172a;
-  --color-text-muted: #475569;
-  --color-text-faint: #64748b;
+  --color-bg: #16140f;
+  --color-paper: #1f1c17;
+  --color-bar: #1d1a15;
+  --color-ink: #efe8d8;
+  --color-text: #efe8d8;
+  --color-muted: #cfc7b8;
+  --color-faint: #a39b8b;
+  --color-hair: #36312a;
+  --color-tram: #e8b923;
+  --color-danger: #f08a73;
+
+  --tram-window: #ffe49a;
+  --tram-wheel: #57514a;
+  --conductor-navy: #44557a;
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-
-    scroll-padding-top: 2rem;
-
+    color-scheme: light;
     background-color: var(--color-bg);
-    color-scheme: dark;
-
-    overscroll-behavior: none;
+    scroll-behavior: smooth;
+    /* Fixed navbar plus a little air. */
+    scroll-padding-top: 88px;
     -webkit-text-size-adjust: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-top: 108px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -58,135 +68,384 @@
   body {
     margin: 0;
     min-height: 100vh;
-
-    overscroll-behavior: none;
-    color: var(--color-text-muted);
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.6;
-    letter-spacing: 0.1px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
   }
 
   ::selection {
-    background: rgba(16, 185, 129, 0.28);
-    color: #ecfdf5;
+    background: var(--color-tram);
+    color: #1b1a17;
   }
 
   button:not(:disabled) {
     cursor: pointer;
   }
 
-  html,
-  body {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  ::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    display: none;
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
 @layer components {
-
-  .glass {
-    background: var(--color-surface);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 1px solid var(--color-border);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  /* Underline that draws in from the left on hover and focus. */
+  .link-draw {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1.5px;
+    padding-bottom: 1px;
+    transition: background-size 0.3s ease;
   }
 
-  .text-gradient {
-    background: linear-gradient(120deg, #34d399 0%, #10b981 45%, #3b82f6 130%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--color-brand-soft);
+  .link-draw:hover,
+  .link-draw:focus-visible,
+  .group:hover .link-draw,
+  .group:focus-visible .link-draw {
+    background-size: 100% 1.5px;
   }
 }
 
-.grain {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.5;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+/* ---------- Theme switch: the new theme spreads out from the toggle ---------- */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
-:root[data-theme='light'] .grain {
-  opacity: 0.35;
-  mix-blend-mode: multiply;
+::view-transition-new(root) {
+  animation: theme-reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hero-glow {
-  opacity: 1;
-}
-
-:root[data-theme='light'] .hero-glow {
-  opacity: 0.6;
-}
-
-:root[data-theme='light'] ::selection {
-  background: rgba(5, 150, 105, 0.25);
-  color: #022c22;
-}
-
-@keyframes spin {
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 0));
+  }
   to {
-    transform: rotate(360deg);
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0));
   }
 }
 
-@keyframes pulse-dot {
+/* ---------- Tram ---------- */
+
+.tram-light {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+:root[data-theme='dark'] .tram-light {
+  opacity: 1;
+  animation: light-flicker 0.7s linear both;
+}
+
+.tram-lens {
+  fill: #e4ded1;
+  transition: fill 0.4s;
+}
+
+:root[data-theme='dark'] .tram-lens {
+  fill: #fff6cf;
+}
+
+.tram-conductor {
+  transition: opacity 0.3s;
+}
+
+.tram-moving > svg {
+  animation: tram-jig 0.2s linear infinite alternate;
+}
+
+.tram-bubble {
+  position: absolute;
+  top: calc(100% + 12px);
+  padding: 8px 14px 9px;
+  white-space: nowrap;
+  background: var(--color-paper);
+  border: 2px solid var(--color-ink);
+  border-radius: 10px;
+  pointer-events: none;
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+}
+
+.tram-bubble[data-hidden='true'] {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.tram-bubble-tail {
+  position: absolute;
+  top: -8px;
+  width: 12px;
+  height: 12px;
+  background: var(--color-paper);
+  border-left: 2px solid var(--color-ink);
+  border-top: 2px solid var(--color-ink);
+  transform: rotate(45deg);
+}
+
+@keyframes light-flicker {
+  0% { opacity: 0; }
+  12% { opacity: 1; }
+  22% { opacity: 0.15; }
+  34% { opacity: 1; }
+  46% { opacity: 0.45; }
+  60%,
+  100% { opacity: 1; }
+}
+
+@keyframes tram-jig {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1px); }
+}
+
+/* ---------- Conductor ---------- */
+
+/* The arm is drawn pointing down from (0,0); this puts it at his shoulder. */
+.conductor .c-arm {
+  transform: translate(101px, 82px) rotate(-12deg);
+}
+
+.conductor.is-tipping .c-arm {
+  animation: cap-tip-arm 1.2s ease-in-out both;
+}
+
+.conductor.is-tipping .c-cap {
+  animation: cap-tip-cap 1.2s ease-in-out both;
+}
+
+.conductor .c-eyes {
+  animation: blink 4.5s infinite;
+}
+
+@keyframes cap-tip-arm {
+  0% { transform: translate(101px, 82px) rotate(-12deg); }
+  30%,
+  70% { transform: translate(101px, 82px) rotate(-183deg) scaleY(1.22); }
+  100% { transform: translate(101px, 82px) rotate(-12deg); }
+}
+
+@keyframes cap-tip-cap {
   0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55);
-  }
-  50% {
-    opacity: 0.75;
-    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
-  }
+  28% { transform: translate(0, 0) translate(100px, 40px) rotate(0deg) translate(-100px, -40px); }
+  42%,
+  64% { transform: translate(0, -14px) translate(100px, 40px) rotate(-16deg) translate(-100px, -40px); }
+  80%,
+  100% { transform: translate(0, 0) translate(100px, 40px) rotate(0deg) translate(-100px, -40px); }
 }
 
-.animate-pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes float-slow {
+@keyframes blink {
   0%,
-  100% {
-    transform: translateY(0);
+  93%,
+  100% { transform: translate(80px, 55px) scaleY(1) translate(-80px, -55px); }
+  96% { transform: translate(80px, 55px) scaleY(0.1) translate(-80px, -55px); }
+}
+
+/* Standing conductor with a thought bubble (job popups, contact form).
+   In the components layer so utilities like `absolute` can override it. */
+@layer components {
+  .conductor-stage {
+    position: relative;
+    pointer-events: none;
   }
-  50% {
-    transform: translateY(-10px);
-  }
+}
+
+.conductor-stage .stage-figure {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  transform: translateX(28px);
+  transition:
+    opacity 0.3s,
+    transform 0.45s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.conductor-stage.is-visible .stage-figure {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.15s;
+}
+
+.thought-dot,
+.thought-bubble {
+  position: absolute;
+  opacity: 0;
+  background: var(--color-paper);
+  border: 2px solid var(--color-ink);
+  color: var(--color-ink);
+}
+
+.thought-dot {
+  border-radius: 50%;
+  transition: opacity 0.2s;
+}
+
+.thought-bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  transform: scale(0.6);
+  transform-origin: 0% 100%;
+  transition:
+    opacity 0.25s,
+    transform 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.is-visible .thought-dot-1 {
+  opacity: 1;
+  transition-delay: 0.45s;
+}
+
+.is-visible .thought-dot-2 {
+  opacity: 1;
+  transition-delay: 0.55s;
+}
+
+.is-visible .thought-bubble {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.65s;
+}
+
+/* Ticket punching after a message is sent. */
+.ticket-body {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.ticket-hole {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  transition: transform 0.15s;
+}
+
+.is-punched .ticket-hole {
+  transform: scale(1);
+}
+
+.is-punched .ticket-body {
+  animation: ticket-shake 0.3s;
+}
+
+/* The rubber stamp lands with a little overshoot. */
+.ticket-stamp {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(1.8);
+  transition:
+    opacity 0.12s,
+    transform 0.22s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+.is-done .ticket-stamp {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes ticket-shake {
+  25% { transform: rotate(-8deg); }
+  75% { transform: rotate(8deg); }
+}
+
+/* ---------- KERIAN laptop corner ---------- */
+
+.laptop-scene {
+  position: relative;
+  width: 180px;
+  height: 200px;
+}
+
+.laptop-svg {
+  position: absolute;
+  left: 0;
+  top: 50px;
+}
+
+.laptop-head {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.35s,
+    transform 0.35s;
+}
+
+.laptop-scene.is-visible .laptop-head {
+  opacity: 1;
+  transform: none;
+}
+
+.laptop-line {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: type-line 6s ease-out infinite both;
+  animation-play-state: paused;
+}
+
+.laptop-scene.is-visible .laptop-line {
+  animation-play-state: running;
+}
+
+.laptop-cursor {
+  animation: cursor-blink 1s steps(1) infinite;
+}
+
+.laptop-steam {
+  animation: steam 2.4s ease-in-out infinite;
+}
+
+@keyframes type-line {
+  0% { transform: scaleX(0); }
+  10% { transform: scaleX(1); }
+  84% { transform: scaleX(1); }
+  90%,
+  100% { transform: scaleX(0); }
+}
+
+@keyframes cursor-blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes steam {
+  0% { opacity: 0; transform: translateY(4px); }
+  40% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+
+/* ---------- Modal ---------- */
+
+.modal-scrim {
+  background: rgb(27 26 23 / 0.45);
+}
+
+:root[data-theme='dark'] .modal-scrim {
+  background: rgb(0 0 0 / 0.65);
+}
+
+.modal-fade {
+  animation: modal-fade 0.2s ease-out;
+}
+
+.modal-pop {
+  animation: modal-pop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes modal-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes modal-pop {
@@ -200,19 +459,85 @@
   }
 }
 
-.modal-fade {
-  animation: modal-fade 0.2s ease-out;
-}
-
-.modal-pop {
-  animation: modal-pop 0.24s cubic-bezier(0.22, 1, 0.36, 1);
-}
+/* ---------- Less motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-pulse-dot,
-  .grain,
+  :root[data-theme='dark'] .tram-light,
+  .tram-moving > svg,
+  .conductor .c-eyes,
+  .conductor.is-tipping .c-arm,
+  .conductor.is-tipping .c-cap,
+  .is-punched .ticket-body,
+  .laptop-line,
+  .laptop-cursor,
+  .laptop-steam,
   .modal-fade,
   .modal-pop {
     animation: none;
+  }
+
+  .tram-light,
+  .tram-lens,
+  .tram-conductor,
+  .tram-bubble,
+  .conductor-stage .stage-figure,
+  .thought-dot,
+  .thought-bubble,
+  .ticket-hole,
+  .ticket-stamp,
+  .laptop-head,
+  .link-draw {
+    transition: none;
+  }
+
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ---------- Print: the page doubles as a CV ---------- */
+
+@media print {
+  @page {
+    margin: 14mm 16mm;
+  }
+
+  html {
+    scroll-padding-top: 0;
+  }
+
+  :root,
+  :root[data-theme='dark'] {
+    --color-bg: #fff;
+    --color-paper: #fff;
+    --color-ink: #000;
+    --color-text: #000;
+    --color-muted: #333;
+    --color-faint: #555;
+    --color-hair: #ccc;
+  }
+
+  body {
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+
+  section {
+    padding: 0 0 7mm !important;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  li,
+  article,
+  dl > div {
+    break-inside: avoid;
+  }
+
+  .link-draw {
+    background-size: 0 0;
   }
 }

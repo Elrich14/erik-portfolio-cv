@@ -1,287 +1,281 @@
-import { useState, type FormEvent } from 'react'
-import SectionHeading from './SectionHeading'
-import { useTranslate } from '../i18n/LanguageContext'
-import {
-  MailIcon,
-  PhoneIcon,
-  MapPinIcon,
-  LinkedinIcon,
-  GithubIcon,
-  SendIcon,
-  CheckIcon,
-  ArrowUpRight,
-} from './icons'
+import { useEffect, useRef, useState } from 'react'
+import type { FormEvent, ReactNode } from 'react'
+import { useTranslate } from '../i18n/context'
+import { useConductor } from '../conductor/context'
+import { FORMSPREE_ENDPOINT, PROFILE } from '../data/profile'
+import SectionHeader from './SectionHeader'
+import CvButton from './CvButton'
+import ConductorStage from './art/ConductorStage'
+import { TicketThought } from './art/ThoughtIcons'
+import { ArrowUpRight, CheckIcon, CopyIcon } from './icons'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
+// While the tram is at the Contact stop the conductor waits on top of the form
+// with a ticket. When a message is sent he punches it like an old BKV ticket,
+// stamps it VALIDATED and tips his cap. The validated ticket stays until the
+// visitor starts writing a new message.
+type TicketStep = 'waiting' | 'punched' | 'done'
 
-const ENDPOINT =
-  (import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined)?.trim() ||
-  'https://formspree.io/f/mjgnrlev'
-const USES_ENDPOINT = Boolean(ENDPOINT)
-const MY_EMAIL = 'elrich.020114@gmail.com'
+async function copyText(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch {
+    const area = document.createElement('textarea')
+    area.value = text
+    area.setAttribute('readonly', '')
+    area.style.position = 'fixed'
+    area.style.opacity = '0'
+    document.body.appendChild(area)
+    area.select()
+    const ok = document.execCommand('copy')
+    area.remove()
+    return ok
+  }
+}
 
 export default function Contact() {
-  const { t } = useTranslate()
+  const { d } = useTranslate()
+  const { location, tipOnTram, setContactBusy } = useConductor()
   const [status, setStatus] = useState<Status>('idle')
   const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [honeypot, setHoneypot] = useState('')
+  const [copied, setCopied] = useState(false)
+  const [ticket, setTicket] = useState<TicketStep>('waiting')
+  const [stageTip, setStageTip] = useState(0)
+  const timers = useRef<number[]>([])
 
-  const DETAILS = [
-    {
-      icon: MailIcon,
-      label: t('contact.labelEmail'),
-      value: 'elrich.020114@gmail.com',
-      href: 'mailto:elrich.020114@gmail.com',
-    },
-    {
-      icon: PhoneIcon,
-      label: t('contact.labelPhone'),
-      value: '+36 70 313 6282',
-      href: 'tel:+36703136282',
-    },
-    {
-      icon: MapPinIcon,
-      label: t('contact.labelLocation'),
-      value: t('contact.locationValue'),
-      href: 'https://maps.google.com/?q=Budapest,+Hungary',
-    },
-    {
-      icon: LinkedinIcon,
-      label: t('contact.labelLinkedin'),
-      value: 'in/erik-andrás-birkl-7b4240306',
-      href: 'https://www.linkedin.com/in/erik-andrás-birkl-7b4240306',
-    },
-    {
-      icon: GithubIcon,
-      label: t('contact.labelGithub'),
-      value: 'github.com/Elrich14',
-      href: 'https://github.com/Elrich14',
-    },
-  ]
+  useEffect(() => {
+    const pending = timers.current
+    return () => pending.forEach((timer) => window.clearTimeout(timer))
+  }, [])
 
-  const reset = () => {
-    setForm({ name: '', email: '', message: '' })
-    window.setTimeout(() => setStatus('idle'), 5000)
+  const later = (ms: number, fn: () => void) => {
+    timers.current.push(window.setTimeout(fn, ms))
+  }
+
+  const onCopy = async () => {
+    if (await copyText(PROFILE.email)) {
+      setCopied(true)
+      // Whichever conductor is visible tips his cap.
+      if (location === 'contact') setStageTip((k) => k + 1)
+      else tipOnTram()
+      later(2000, () => setCopied(false))
+    }
+  }
+
+  const punchTicket = () => {
+    // Keeps him at the form even if the visitor scrolls away mid-punch. If he
+    // was still on the tram, give him time to walk over before punching.
+    const walk = location === 'contact' ? 0 : 650
+    setContactBusy(true)
+    setTicket('waiting')
+    later(walk + 500, () => setTicket('punched'))
+    later(walk + 900, () => {
+      setTicket('done')
+      setStageTip((k) => k + 1)
+    })
+    later(walk + 3400, () => setContactBusy(false))
+  }
+
+  // Starting a new message gets a fresh, unpunched ticket.
+  const update = (key: keyof typeof form, value: string) => {
+    setForm((f) => ({ ...f, [key]: value }))
+    if (ticket === 'done') setTicket('waiting')
   }
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (status === 'sending') return
-
-    if (!ENDPOINT) {
-      const subject = encodeURIComponent(
-        `${t('contact.mailtoSubjectPrefix')} ${form.name || t('contact.mailtoVisitor')}`,
-      )
-      const body = encodeURIComponent(
-        `${form.message}\n\n— ${form.name} <${form.email}>`,
-      )
-      window.location.href = `mailto:${MY_EMAIL}?subject=${subject}&body=${body}`
-      setStatus('sent')
-      reset()
-      return
-    }
-
     setStatus('sending')
     try {
-      const res = await fetch(ENDPOINT, {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
         headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, _subject: `Portfolio: ${form.name}`, _gotcha: honeypot }),
       })
       if (!res.ok) throw new Error('Request failed')
       setStatus('sent')
-      reset()
+      setForm({ name: '', email: '', message: '' })
+      punchTicket()
+      later(6000, () => setStatus('idle'))
     } catch {
       setStatus('error')
-      window.setTimeout(() => setStatus('idle'), 6000)
     }
   }
 
-  const disabled = status === 'sending'
-  const sentLabel = USES_ENDPOINT
-    ? t('contact.buttonSentEndpoint')
-    : t('contact.buttonSentMailto')
+  const rows: { label: string; content: ReactNode }[] = [
+    {
+      label: d.contact.labels.email,
+      content: (
+        <span className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <a href={`mailto:${PROFILE.email}`} className="link-draw break-all">
+            {PROFILE.email}
+          </a>
+          <button
+            type="button"
+            onClick={onCopy}
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-faint transition-colors hover:text-ink print:hidden"
+          >
+            {copied ? <CheckIcon className="h-4 w-4" /> : <CopyIcon className="h-4 w-4" />}
+            <span aria-live="polite">{copied ? d.contact.copied : d.contact.copy}</span>
+          </button>
+        </span>
+      ),
+    },
+    {
+      label: d.contact.labels.phone,
+      content: (
+        <a href={PROFILE.phoneHref} className="link-draw">
+          {PROFILE.phoneDisplay}
+        </a>
+      ),
+    },
+    { label: d.contact.labels.location, content: d.contact.locationValue },
+    {
+      label: d.contact.labels.linkedin,
+      content: (
+        <a href={PROFILE.linkedinUrl} target="_blank" rel="noopener noreferrer" className="link-draw inline-flex items-center gap-1">
+          {PROFILE.linkedinDisplay}
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </a>
+      ),
+    },
+    {
+      label: d.contact.labels.github,
+      content: (
+        <a href={PROFILE.githubUrl} target="_blank" rel="noopener noreferrer" className="link-draw inline-flex items-center gap-1">
+          {PROFILE.githubDisplay}
+          <ArrowUpRight className="h-3.5 w-3.5" />
+        </a>
+      ),
+    },
+    { label: d.contact.labels.cv, content: <CvButton variant="link" /> },
+  ]
+
+  const field =
+    'w-full rounded-lg border-2 border-hair bg-bg px-4 py-3 text-text placeholder:text-faint transition-colors focus:border-ink focus:outline-none disabled:opacity-60'
+  const label = 'mb-2 block font-mono text-xs tracking-wide text-faint'
+  const sending = status === 'sending'
 
   return (
-    <section id="contact" className="relative px-4 py-16 sm:px-6 md:py-20">
+    <section id="contact" className="px-4 py-16 sm:px-6 sm:py-24 print:hidden">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader index="05" title={d.contact.title} intro={d.contact.intro} />
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-10 h-72 w-72 -translate-x-1/2 rounded-full bg-brand/10 blur-[120px]"
-      />
-
-      <div className="relative mx-auto max-w-6xl">
-        <SectionHeading
-          index="05"
-          eyebrow={t('contact.eyebrow')}
-          title={
-            <>
-              {t('contact.titleLine1')}{' '}
-              <span className="text-gradient">{t('contact.titleLine2')}</span>
-            </>
-          }
-          intro={t('contact.intro')}
-        />
-
-        <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-5">
-
-          <div className="lg:col-span-2">
-            <ul className="flex h-full flex-col gap-3">
-              {DETAILS.map(({ icon: Icon, label, value, href }) => (
-                <li key={label} className="flex-1">
-                  <a
-                    href={href}
-                    target={href.startsWith('http') ? '_blank' : undefined}
-                    rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="glass group flex h-full items-center gap-4 rounded-2xl p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30"
-                  >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-brand transition-colors group-hover:border-brand/30 group-hover:bg-brand/10">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-mono text-[0.7rem] uppercase tracking-wider text-text-faint">
-                        {label}
-                      </p>
-                      <p className="truncate text-sm font-medium text-text">
-                        {value}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-text-faint transition-colors group-hover:text-brand" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="lg:col-span-3">
-            <form onSubmit={onSubmit} className="glass flex h-full flex-col rounded-3xl p-6 sm:p-8">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field
-                  id="name"
-                  label={t('contact.formNameLabel')}
-                  type="text"
-                  placeholder={t('contact.formNamePlaceholder')}
-                  value={form.name}
-                  disabled={disabled}
-                  onChange={(v) => setForm((f) => ({ ...f, name: v }))}
-                />
-                <Field
-                  id="email"
-                  label={t('contact.formEmailLabel')}
-                  type="email"
-                  placeholder={t('contact.formEmailPlaceholder')}
-                  value={form.email}
-                  disabled={disabled}
-                  onChange={(v) => setForm((f) => ({ ...f, email: v }))}
-                />
+        <div className="grid items-start gap-10 lg:pt-16 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
+          <dl className="divide-y divide-hair border-y border-hair">
+            {rows.map((row) => (
+              <div key={row.label} className="grid gap-1 py-4 sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-4">
+                <dt className="pt-0.5 font-mono text-xs tracking-wide text-faint">{row.label}</dt>
+                <dd>{row.content}</dd>
               </div>
+            ))}
+          </dl>
 
-              <div className="mt-5 flex flex-1 flex-col">
-                <label
-                  htmlFor="message"
-                  className="mb-2 block font-mono text-xs uppercase tracking-wider text-text-muted"
-                >
-                  {t('contact.formMessageLabel')}
+          <form
+            onSubmit={onSubmit}
+            className={`relative mt-44 rounded-xl border-2 border-ink bg-paper p-6 sm:p-8 lg:mt-0 print:hidden ${
+              ticket === 'punched' || ticket === 'done' ? 'is-punched' : ''
+            } ${ticket === 'done' ? 'is-done' : ''}`}
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="name" className={label}>
+                  {d.contact.form.name}
                 </label>
-                <textarea
-                  id="message"
+                <input
+                  id="name"
+                  type="text"
                   required
-                  rows={5}
-                  placeholder={t('contact.formMessagePlaceholder')}
-                  value={form.message}
-                  disabled={disabled}
-                  onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-                  className="w-full flex-1 resize-none rounded-xl border border-border bg-surface-2 px-4 py-3 text-text placeholder:text-text-faint transition-colors focus:border-brand/50 focus:bg-surface-2 focus:outline-none disabled:opacity-60"
+                  autoComplete="name"
+                  placeholder={d.contact.form.namePlaceholder}
+                  value={form.name}
+                  disabled={sending}
+                  onChange={(e) => update('name', e.target.value)}
+                  className={field}
                 />
               </div>
-
-              <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <button
-                  type="submit"
-                  disabled={disabled}
-                  className={`inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 font-medium transition-all disabled:cursor-not-allowed ${
-                    status === 'sent'
-                      ? 'bg-brand/15 text-brand-soft'
-                      : 'bg-brand text-emerald-950 shadow-lg shadow-brand/25 hover:-translate-y-0.5 hover:bg-brand-hover disabled:translate-y-0'
-                  }`}
-                >
-                  {(status === 'idle' || status === 'error') && (
-                    <>
-                      {t('contact.sendMessage')}
-                      <SendIcon className="h-4.5 w-4.5" />
-                    </>
-                  )}
-                  {status === 'sending' && (
-                    <>
-                      <span className="h-4.5 w-4.5 animate-spin rounded-full border-2 border-emerald-950/30 border-t-emerald-950" />
-                      {t('contact.sending')}
-                    </>
-                  )}
-                  {status === 'sent' && (
-                    <>
-                      <CheckIcon className="h-4.5 w-4.5" />
-                      {sentLabel}
-                    </>
-                  )}
-                </button>
-
-                <p aria-live="polite" className="font-mono text-xs">
-                  {status === 'error' ? (
-                    <span className="text-rose-400">
-                      {t('contact.statusErrorPrefix')}{' '}
-                      <a
-                        href={`mailto:${MY_EMAIL}`}
-                        className="underline transition-colors hover:text-rose-300"
-                      >
-                        {t('contact.statusErrorLink')}
-                      </a>
-                      .
-                    </span>
-                  ) : status === 'sent' ? (
-                    <span className="text-brand-soft">
-                      {USES_ENDPOINT
-                        ? t('contact.statusSentEndpoint')
-                        : t('contact.statusSentMailto')}
-                    </span>
-                  ) : null}
-                </p>
+              <div>
+                <label htmlFor="email" className={label}>
+                  {d.contact.form.email}
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  placeholder={d.contact.form.emailPlaceholder}
+                  value={form.email}
+                  disabled={sending}
+                  onChange={(e) => update('email', e.target.value)}
+                  className={field}
+                />
               </div>
-            </form>
-          </div>
+            </div>
+
+            <div className="mt-5">
+              <label htmlFor="message" className={label}>
+                {d.contact.form.message}
+              </label>
+              <textarea
+                id="message"
+                required
+                rows={6}
+                placeholder={d.contact.form.messagePlaceholder}
+                value={form.message}
+                disabled={sending}
+                onChange={(e) => update('message', e.target.value)}
+                className={`${field} block resize-y`}
+              />
+            </div>
+
+            {/* Spam trap for bots; Formspree drops submissions that fill it in. */}
+            <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+              <label htmlFor="_gotcha">{d.contact.form.honeypot}</label>
+              <input
+                id="_gotcha"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </div>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+              <button
+                type="submit"
+                disabled={sending}
+                className="inline-flex items-center justify-center gap-2 self-start rounded-lg bg-ink px-6 py-3 font-medium text-bg transition-transform hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-70"
+              >
+                {status === 'sending' ? d.contact.form.sending : status === 'sent' ? d.contact.form.sent : d.contact.form.send}
+              </button>
+              <p aria-live="polite" className="text-sm sm:max-w-[16rem]">
+                {status === 'sent' && <span className="text-muted">{d.contact.form.statusSent}</span>}
+                {status === 'error' && (
+                  <span className="text-danger">
+                    {d.contact.form.statusError}{' '}
+                    <a href={`mailto:${PROFILE.email}`} className="underline">
+                      {PROFILE.email}
+                    </a>
+                  </span>
+                )}
+              </p>
+            </div>
+
+            {/* He stands on the top edge of the form, so he never covers a field. */}
+            <ConductorStage
+              className="absolute right-4 bottom-full sm:right-8"
+              visible={location === 'contact'}
+              tipKey={stageTip}
+              bubbleWidth={124}
+              bubbleHeight={70}
+              thought={<TicketThought />}
+            />
+          </form>
         </div>
       </div>
     </section>
-  )
-}
-
-interface FieldProps {
-  id: string
-  label: string
-  type: string
-  placeholder: string
-  value: string
-  disabled: boolean
-  onChange: (v: string) => void
-}
-
-function Field({ id, label, type, placeholder, value, disabled, onChange }: FieldProps) {
-  return (
-    <div>
-      <label
-        htmlFor={id}
-        className="mb-2 block font-mono text-xs uppercase tracking-wider text-text-muted"
-      >
-        {label}
-      </label>
-      <input
-        id={id}
-        type={type}
-        required
-        placeholder={placeholder}
-        value={value}
-        disabled={disabled}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-border bg-surface-2 px-4 py-3 text-text placeholder:text-text-faint transition-colors focus:border-brand/50 focus:bg-surface-2 focus:outline-none disabled:opacity-60"
-      />
-    </div>
   )
 }
