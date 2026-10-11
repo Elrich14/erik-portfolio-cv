@@ -3,10 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <!-- Modern browsers use the SVG; the PNG is the fallback. Its `sizes`
-         attribute stops Chrome from picking the PNG over the SVG. -->
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+         attribute stops Chrome from picking the PNG over the SVG.
+         Bump ?v= whenever the icon changes: browsers keep favicons in their
+         own cache keyed by URL and rarely re-download the same URL. -->
+    <link rel="icon" href="/favicon-32.png?v=2" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
