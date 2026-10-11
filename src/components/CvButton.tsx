@@ -1,5 +1,5 @@
 import { useTranslate } from '../i18n/context'
-import { CV_PDF } from '../data/profile'
+import { CV_DOWNLOAD_NAME, CV_PDF } from '../data/profile'
 import { DownloadIcon } from './icons'
 
 const STYLES = {
@@ -17,7 +17,7 @@ export default function CvButton({ variant }: { variant: keyof typeof STYLES }) 
 
   if (pdf) {
     return (
-      <a href={pdf} download className={STYLES[variant]}>
+      <a href={pdf} download={CV_DOWNLOAD_NAME} className={STYLES[variant]}>
         {icon}
         {d.cv.download}
       </a>

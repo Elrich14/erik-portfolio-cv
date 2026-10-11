@@ -23,8 +23,8 @@ you are reading. Its conductor is the site's mascot.
 - **Hungarian and English.** All copy lives in `src/i18n/hu.json` and `src/i18n/en.json`. The Hungarian file is type-checked against the English one.
 - **Contact form.** It posts to Formspree and has a honeypot field. There is also a copy-email button.
 - **CV.**
-  - The "Download CV" button links to a PDF once one is set in `src/data/profile.ts`.
-  - Until then it opens the print dialog. The print stylesheet lays the page out as a CV.
+  - The "Download CV" button downloads the PDF in `public/cv/`; the paths are set in `src/data/profile.ts`.
+  - Without a PDF it opens the print dialog instead. The print stylesheet lays the page out as a CV.
 - **Accessibility.** Respects `prefers-reduced-motion`, has visible focus rings, and the decorative art is hidden from screen readers.
 
 ## Tech stack
